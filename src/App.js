@@ -2,6 +2,8 @@ import './App.css';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,7 +23,7 @@ const app = initializeApp(firebaseConfig);
 function App() {
   return (
     <div className="App">
-
+      Testing
     </div>
   );
 }
