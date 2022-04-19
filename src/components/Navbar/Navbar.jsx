@@ -1,6 +1,6 @@
 import { IconContext } from 'react-icons';
-import { Container, Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import './Navbar.scss';
 
@@ -9,31 +9,41 @@ export default function CustomNavbar(props) {
     const { AppIcon, appTitle, routes } = props;
 
     return (
-        <Navbar as='nav' expand='lg' bg='dark' variant='dark'>
-            <Container>
-                <Navbar.Brand href='/'>
-                    <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
-                        <AppIcon />
-                    </IconContext.Provider>
-                    <h1>{appTitle}</h1>
-                </Navbar.Brand>
-                <Navbar.Collapse>
-                    <Nav>
-                        {routes.map((route, i) => {
-                            return (
-                                <Link
-                                    key={i}
-                                    to={route.name === 'home' ? '/' : route.name}
-                                >   
-                                    <IconContext.Provider value={{ color: '#fd5252' }}>
-                                        <route.icon />
-                                    </IconContext.Provider>
-                                    {route.getDisplayName()}
-                                </Link>
-                            )
-                        })}
-                    </Nav>
-                </Navbar.Collapse>
+        <Navbar expand='lg' bg='dark' variant='dark'>
+            <Container fluid>
+                <Row className='d-flex flex-grow-1'>
+                    <Col sm={4}>
+                        <Navbar.Brand href='/' className='d-flex align-items-center'>
+                            <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
+                                <AppIcon className='icon' />
+                            </IconContext.Provider>
+                            <h1>{appTitle}</h1>
+                        </Navbar.Brand>
+                    </Col>
+                    <Col className='d-flex align-items-center'>
+                        <Navbar.Collapse className='d-flex flex-grow-1'>
+                            <Nav className='d-flex flex-grow-1 justify-content-around' variant='pills'>
+                                {routes.map((route, i) => {
+                                    return (
+                                        <Nav.Item>
+                                            <LinkContainer
+                                                key={i}
+                                                to={route.name === 'home' ? '/' : route.name}
+                                            >   
+                                                <Nav.Link className='d-flex align-items-center'>
+                                                    <IconContext.Provider value={{ color: '#fd5252' }}>
+                                                        <route.icon className='icon'/>
+                                                    </IconContext.Provider>
+                                                    {route.getDisplayName()}
+                                                </Nav.Link>
+                                            </LinkContainer>
+                                        </Nav.Item>
+                                    )
+                                })}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Col>
+                </Row>
             </Container>
         </Navbar>
     )
