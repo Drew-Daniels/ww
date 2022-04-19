@@ -12,7 +12,7 @@ export default function CustomNavbar(props) {
         <Navbar as='nav' expand='lg' bg='dark' variant='dark'>
             <Container>
                 <Navbar.Brand href='/'>
-                    <IconContext.Provider value={{ size: '2em', color: '#d9534f'}}>
+                    <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
                         <AppIcon />
                     </IconContext.Provider>
                     <h1>{appTitle}</h1>
@@ -24,8 +24,10 @@ export default function CustomNavbar(props) {
                                 <Link
                                     key={i}
                                     to={route.name === 'home' ? '/' : route.name}
-                                >
-                                    <route.icon />
+                                >   
+                                    <IconContext.Provider value={{ color: '#fd5252' }}>
+                                        <route.icon />
+                                    </IconContext.Provider>
                                     {route.getDisplayName()}
                                 </Link>
                             )

@@ -8,8 +8,8 @@ export default function Footer(props) {
 
     return (
         <Container fluid as='footer' className='footer d-flex flex-column py-5'>
-            <Container as='a' id='github-link-project' className='d-flex justify-content-center' href='https://github.com/Drew-Daniels/w2w-wallpapers'>
-                <IconContext.Provider value={{ size: '2em', alignSelf: 'center'}}>
+            <Container as='a' id='github-link-project' className='d-flex justify-content-center' href='https://github.com/Drew-Daniels/ww'>
+                <IconContext.Provider value={{ size: '2em', alignSelf: 'center', color: '#fd5252'}}>
                     <GitHubIcon />
                 </IconContext.Provider>
             </Container>

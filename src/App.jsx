@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import { FaSearch as AppIcon } from 'react-icons/fa';
@@ -26,13 +27,20 @@ const routes = [
   new Route('leaderboards', LeaderboardsIcon),
 ]
 
-function App() {
+function App(props) {
+
+  const { getImageURL } = props;
+
   return (
-    <div className="App">
-      <Navbar AppIcon={AppIcon} appTitle={appTitle} routes={routes} />
-      <Outlet />
+    <Container fluid className='App d-flex flex-column flex-grow-1 min-vh-100 px-0'>
+      <Container fluid className='d-flex flex-column flex-grow-1 px-0'>
+        <Navbar AppIcon={AppIcon} appTitle={appTitle} routes={routes} />
+        <Outlet context={{
+          getImageURL: getImageURL,
+        }}/>
+      </Container>
       <Footer />
-    </div>
+    </Container>
   );
 }
 
