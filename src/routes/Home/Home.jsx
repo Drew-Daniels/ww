@@ -7,13 +7,8 @@ export default function Home(props) {
 
     const { getImageURL } = useOutletContext();
     const [portraitURL, setPortraitURL] = useState('')
-    getImageURL('images','hieronymus-bosch-portrait.jfif')
-        .then((url) => {
-            setPortraitURL(url)
-        })
-        .catch((err) => {
-            console.error(err)
-        });
+    
+    retrievePortrait();
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0'>
@@ -23,4 +18,14 @@ export default function Home(props) {
 
         </Container>
     )
+
+    function retrievePortrait() {
+        getImageURL('images','hieronymus-bosch-portrait.jfif')
+        .then((url) => {
+            setPortraitURL(url)
+        })
+        .catch((err) => {
+            console.error(err)
+        });
+    }
 }

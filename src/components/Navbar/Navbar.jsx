@@ -13,7 +13,7 @@ export default function CustomNavbar(props) {
             <Container fluid>
                 <Row className='d-flex flex-grow-1'>
                     <Col sm={4}>
-                        <Navbar.Brand href='/' className='d-flex align-items-center'>
+                        <Navbar.Brand href='/' className='d-flex align-items-center justify-content-center'>
                             <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
                                 <AppIcon className='icon' />
                             </IconContext.Provider>
@@ -25,12 +25,11 @@ export default function CustomNavbar(props) {
                             <Nav className='d-flex flex-grow-1 justify-content-around' variant='pills'>
                                 {routes.map((route, i) => {
                                     return (
-                                        <Nav.Item>
+                                        <Nav.Item key={i}>
                                             <LinkContainer
-                                                key={i}
                                                 to={route.name === 'home' ? '/' : route.name}
                                             >   
-                                                <Nav.Link className='d-flex align-items-center'>
+                                                <Nav.Link className='d-flex justify-content-center align-items-center'>
                                                     <IconContext.Provider value={{ color: '#fd5252' }}>
                                                         <route.icon className='icon'/>
                                                     </IconContext.Provider>
