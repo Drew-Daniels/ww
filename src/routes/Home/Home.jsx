@@ -13,7 +13,7 @@ export default function Home(props) {
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0'>
-            <figure className='figure'>
+            <Container as='figure' className='figure'>
                 <div className='frame mb-5'>
                     {!loaded &&
                         <Spinner animation="border" variant="danger" />
@@ -51,7 +51,7 @@ export default function Home(props) {
                         <cite title='Wikipedia' href='https://en.wikipedia.org/wiki/Hieronymus_Bosch'>Wikipedia</cite>
                     }
                 </figcaption>
-            </figure>
+            </Container>
         </Container>
     )
 
