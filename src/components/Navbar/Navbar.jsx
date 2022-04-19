@@ -12,15 +12,19 @@ export default function CustomNavbar(props) {
         <Navbar expand='lg' bg='dark' variant='dark'>
             <Container fluid>
                 <Row className='d-flex flex-grow-1'>
-                    <Col sm={4}>
-                        <Navbar.Brand href='/' className='d-flex align-items-center justify-content-center'>
-                            <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
-                                <AppIcon className='icon' />
-                            </IconContext.Provider>
-                            <h1>{appTitle}</h1>
+                        <Navbar.Brand href='/' className='d-flex flex-grow-1 align-items-center justify-content-center'>
+                            <Row className='d-flex'>
+                                <Col xs={12} sm={2} className='d-flex justify-content-center align-items-center'>
+                                    <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
+                                        <AppIcon />
+                                    </IconContext.Provider>
+                                </Col>
+                                <Col sm={9} className='d-flex align-items-center justify-content-center'>
+                                    <h1>{appTitle}</h1>
+                                </Col>
+                            </Row>
                         </Navbar.Brand>
-                    </Col>
-                    <Col className='d-flex align-items-center'>
+                    <Row className='d-flex align-items-center'>
                         <Navbar.Collapse className='d-flex flex-grow-1'>
                             <Nav className='d-flex flex-grow-1 justify-content-around' variant='pills'>
                                 {routes.map((route, i) => {
@@ -41,7 +45,7 @@ export default function CustomNavbar(props) {
                                 })}
                             </Nav>
                         </Navbar.Collapse>
-                    </Col>
+                    </Row>
                 </Row>
             </Container>
         </Navbar>
