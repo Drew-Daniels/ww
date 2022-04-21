@@ -65,8 +65,13 @@ root.render(
 //   return downloadURL;
 // }
 
-function getImageURL(folder, fname) {
-
+/**
+ * 
+ * @param {string} folder 
+ * @param {string} fname 
+ * @returns Promise
+ */
+async function getImageURL(folder, fname) {
   const storage = getStorage(app);
   const pathRef = ref(storage, [folder, fname].join('/'));
   return getDownloadURL(pathRef);

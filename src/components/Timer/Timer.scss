@@ -1,0 +1,22 @@
+.timer {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2em;
+    color: #fd5252;
+    padding: .5em;
+    background-color: rgb(33, 37, 41);
+    border-radius: .25em;
+    display: flex;
+    justify-content: center;
+}
+.timer-icon {
+    transform: rotate(-45deg);
+    margin-right: 1em;
+}
+.spin {
+    animation: spin 60s linear infinite;
+}
+
+@keyframes spin {
+    0%  {-webkit-transform: rotate(-45deg);}
+    100% {-webkit-transform: rotate(315deg);}   
+}

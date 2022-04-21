@@ -55,14 +55,14 @@ export default function Home(props) {
         </Container>
     )
 
-    function retrievePortrait() {
-        getImageURL('images','hieronymus-bosch-portrait.jfif')
-        .then((url) => {
-            setPortraitURL(url)
+    async function retrievePortrait() {
+        try {
+            const url = await getImageURL('images','hieronymus-bosch-portrait.jfif');
+            setPortraitURL(url);
             setLoaded(true);
-        })
-        .catch((err) => {
+        }
+        catch(err) {
             console.error(err)
-        });
+        }
     }
 }
