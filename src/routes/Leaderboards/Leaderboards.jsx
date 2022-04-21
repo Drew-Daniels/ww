@@ -1,10 +1,16 @@
+import { useState } from 'react';
+import { Container, ListGroup, Badge } from 'react-bootstrap';
 import './Leaderboards.scss';
 
 export default function Leaderboards(props) {
 
     return (
-        <main>
+        <Container>
             Leaderboards will go here
-        </main>
+        </Container>
     )
+
+    async function getLeaderboardData() {
+        // get leaderboards data from Firestore here
+    }
 }
