@@ -19,7 +19,7 @@ export default function Home(props) {
                         <Spinner animation="border" variant="danger" />
                     }
                     {loaded &&
-                        <img src={portraitURL} alt="Hieronymus Bosch portrait" figure-img img-fluid rounded />
+                        <img src={portraitURL} alt="Hieronymus Bosch portrait" />
                     }
                 </div>                    
                 <blockquote className='blockquote'>
