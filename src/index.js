@@ -39,7 +39,7 @@ import { getImageURL } from './helpers/storHelpers';
 const firebaseAppConfig = getFirebaseConfig();
 initializeApp(firebaseAppConfig);
 
-resetCollections();
+// resetCollections();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -18,20 +18,38 @@ export default function Leaderboards(props) {
 
     loadTopGames();
 
-    return (
-        <Container fluid>
-            {!loaded &&
-                <Placeholder >
+    var placeholders = [];
+    for (let i=0; i < 10; i++) {
+        placeholders.push(
+            <Placeholder key={i} xs={12} animation='glow' />
+        )
+    }
 
-                </Placeholder>
-            }
-            {loaded &&
-                games.map((game, i) => {
-                    return (
-                        <li>{game.user_id}</li>
-                    )
-                })
-            }
+    return (
+        <Container fluid className='d-flex justify-content-center flex-grow-1'>
+            <ListGroup variant='flush'>
+                {!loaded && placeholders }
+                {loaded &&
+                    games.map((game, i) => {
+                        i++
+                        return (
+                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-between align-items-start">
+                                <Badge bg={i === 1 ? 'warning': 'success'} pill>
+                                    {i}
+                                </Badge>
+                                <Container className='d-flex flex-column'>
+                                    <div>
+                                        {game.user_id}
+                                    </div>
+                                    <div>
+                                        {game.duration_sec}
+                                    </div>
+                                </Container>
+                            </ListGroup.Item>
+                        )
+                    })
+                }
+            </ListGroup>
         </Container>
     )
 
