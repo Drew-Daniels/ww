@@ -1,11 +1,12 @@
 import {
-getFirestore,
 getDocs,
 collection,
 doc,
 deleteDoc,
 setDoc,
 } from 'firebase/firestore';
+
+import { db } from '../firebase';
 
 // Factory functions
 const UserFactory = (name) => ({
@@ -18,7 +19,6 @@ const GameFactory = (user_id, duration_sec) => ({
 })
   
 async function resetCollections() {
-    const db = getFirestore();
 
     await removeAll();
     await addAll();

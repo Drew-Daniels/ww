@@ -9,37 +9,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { initializeApp } from 'firebase/app';
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-  query,
-  orderBy,
-  limit,
-  onSnapshot,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  serverTimestamp,
-} from 'firebase/firestore';
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
-import { getFirebaseConfig } from './firebase-config';
 
-import { resetCollections } from './helpers/dbHelpers';
 import { getImageURL } from './helpers/storHelpers';
-
-const firebaseAppConfig = getFirebaseConfig();
-initializeApp(firebaseAppConfig);
-
-// resetCollections();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

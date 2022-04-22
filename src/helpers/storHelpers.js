@@ -1,10 +1,9 @@
 import {
-    getStorage,
     ref,
     getDownloadURL,
 } from 'firebase/storage';
 
-import { getApp } from 'firebase/app';
+import { storage } from '../firebase';
 
 /**
  * 
@@ -13,7 +12,6 @@ import { getApp } from 'firebase/app';
  * @returns Promise
  */
  async function getImageURL(folder, fname) {
-    const storage = getStorage(getApp());
     const pathRef = ref(storage, [folder, fname].join('/'));
     return getDownloadURL(pathRef);
 }

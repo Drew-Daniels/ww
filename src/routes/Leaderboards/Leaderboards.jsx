@@ -8,15 +8,30 @@ import {
     limit,
     getDocs,
 } from 'firebase/firestore';
+import db from '../../firebase';
 import './Leaderboards.scss';
+
+const topGames = loadTopGames()
+
+async function loadTopGames() {
+    const top10Query = query(collection(db, 'games'), orderBy('duration_sec', 'desc'), limit(10));
+    const top10GamesPromise = await getDocs(top10Query);
+    try {
+        const top10Games = [];
+        top10GamesPromise.forEach((doc) => {
+            top10Games.push(doc.data());
+        })
+        return top10Games;
+    }
+    catch(err) {
+        console.error(err)
+    }
+}
 
 export default function Leaderboards(props) {
 
-
     const [loaded, setLoaded] = useState(false);
-    const [games, setGames] = useState([]);
-
-    loadTopGames();
+    const [games, setGames] = useState(topGames);
 
     var placeholders = [];
     for (let i=0; i < 10; i++) {
@@ -52,22 +67,4 @@ export default function Leaderboards(props) {
             </ListGroup>
         </Container>
     )
-
-    async function loadTopGames() {
-        const top10Query = query(collection(getFirestore(), 'games'), orderBy('duration_sec', 'desc'), limit(10));
-        const top10GamesPromise = await getDocs(top10Query);
-        try {
-            const top10Games = [];
-            top10GamesPromise.forEach((doc) => {
-                top10Games.push(doc.data());
-            })
-            setGames(top10Games);
-        }
-        catch(err) {
-            console.error(err)
-        }
-        finally {
-            setLoaded(true)
-        }
-    }
 }
