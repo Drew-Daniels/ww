@@ -1,9 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import { getFirebaseConfig } from './firebase-config';
 import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
-const firebaseAppConfig = getFirebaseConfig();
-const app = initializeApp(firebaseAppConfig);
+import { fbConfig } from './firebase-config';
+const app = initializeApp(fbConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Placeholder, Spinner } from 'react-bootstrap';
 import { useOutletContext } from 'react-router-dom';
 import './Home.scss';
@@ -8,8 +8,22 @@ export default function Home(props) {
     const { getImageURL } = useOutletContext();
     const [portraitURL, setPortraitURL] = useState('')
     const [loaded, setLoaded] = useState(false);
-    
-    retrievePortrait();
+
+    useEffect(() => {
+        retreivePortrait();
+        
+        //FUNCTIONS
+        async function retreivePortrait() {
+            try {
+                const url = await getImageURL('images','hieronymus-bosch-portrait.jfif');
+                setPortraitURL(url);
+                setLoaded(true);
+            }
+            catch(err) {
+                console.error(err)
+            }
+        }
+    }, [getImageURL])
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0'>

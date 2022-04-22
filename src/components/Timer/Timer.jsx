@@ -1,24 +1,23 @@
-import { useStopwatch } from 'react-timer-hook';
+import { useStopwatch, useState, useEffect } from 'react-timer-hook';
 import { Container, Row, Col } from 'react-bootstrap';
 import { IconContext } from 'react-icons';
 import { RiTimer2Fill as TimerIcon } from 'react-icons/ri';
 
 import './Timer.scss';
 
-// TODO: Figure out a way so that the timer always pads with 0s when displaying minutes and seconds
-
 export default function Timer() {
 
     const {
         seconds,
-        minutes,
-        hours,
-        days,
-        isRunning,
-        start,
-        pause,
-        reset,
-      } = useStopwatch({ autoStart: true });
+        minutes
+    } = useStopwatch({ autoStart: true });
+
+    const [timer, setTimer] = useState('')
+
+    useEffect(() => {
+        const newTime = formatTime(minutes, seconds);
+        setTimer(newTime);
+    }, [seconds, minutes])
 
     return (
         <Container className='d-flex align-items-center timer'>
@@ -29,7 +28,7 @@ export default function Timer() {
                     </IconContext.Provider>
                 </Col>
                 <Col className='d-flex flex-grow-1 justify-content-center align-items-center'>
-                    <span>{formatTime(minutes, seconds)}</span>
+                    <span>{timer}</span>
                 </Col>
             </Row>
         </Container>

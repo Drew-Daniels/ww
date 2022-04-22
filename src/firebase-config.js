@@ -1,4 +1,4 @@
-const config = {
+const fbConfig = {
     apiKey: "AIzaSyDG2fLLEjnjdKsDsPTSVRiruK_FyisIcJ8",
     authDomain: "drew-daniels-wheres-waldo.firebaseapp.com",
     projectId: "drew-daniels-wheres-waldo",
@@ -7,11 +7,6 @@ const config = {
     appId: "1:455264246838:web:f027b4bcd76e2e7d448c97"
 };
 
-export function getFirebaseConfig() {
-    if (!config || !config.apiKey) {
-      throw new Error('No Firebase configuration object provided.' + '\n' +
-      'Add your web app\'s configuration object to firebase-config.js');
-    } else {
-      return config;
-    }
+export {
+  fbConfig,
 }
