@@ -25,7 +25,7 @@ export default function Arena(props) {
                 <Spinner animation="border" variant="danger" />
             }
             {loaded &&
-                <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image'/>
+                <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image' />
             }
         </Container>
     )

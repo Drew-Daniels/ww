@@ -45,14 +45,14 @@ export default function Leaderboards(props) {
     }
 
     return (
-        <Container as='main' fluid className='d-flex justify-content-center flex-grow-1'>
-            <ListGroup className='d-flex justify-content-center flex-grow-1' variant='flush'>
+        <Container as='main' fluid className='d-flex flex-grow-1'>
+            <ListGroup className='d-flex flex-grow-1' variant='flush'>
                 {!loaded && placeholders }
                 {loaded &&
                     games.map((game, i) => {
                         i++
                         return (
-                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-center align-items-center">
+                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-center">
                                 <Row>
                                     <Col lg={6} className="d-flex justify-content-end align-items-center">
                                         <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
@@ -61,17 +61,15 @@ export default function Leaderboards(props) {
                                     </Col>
                                     <Col lg={6}>
                                         <Container>
-                                            <div>
+                                            <h2>
                                                 {game.user}
-                                            </div>
-                                            <div>
+                                            </h2>
+                                            <h3>
                                                 {game.duration}
-                                            </div>
+                                            </h3>
                                         </Container>
                                     </Col>
                                 </Row>
-
-
                             </ListGroup.Item>
                         )
                     })
