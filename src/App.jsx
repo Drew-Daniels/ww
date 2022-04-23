@@ -7,7 +7,7 @@ import { RiHomeFill as HomeIcon } from 'react-icons/ri';
 import { FaGamepad as GameIcon } from 'react-icons/fa';
 import { MdSportsScore as LeaderboardsIcon } from 'react-icons/md';
 
-import './stylesheets/App.css';
+import './stylesheets/css/App.css';
 
 const appTitle = "Where's Waldo"
 

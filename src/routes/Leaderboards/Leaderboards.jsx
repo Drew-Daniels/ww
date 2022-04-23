@@ -21,7 +21,7 @@ export default function Leaderboards(props) {
         
         // FUNCTIONS
         async function retrieveGames() {
-            const top10Query = query(collection(db, 'games'), orderBy('duration_sec', 'desc'), limit(10));
+            const top10Query = query(collection(db, 'games'), orderBy('duration', 'asc'), limit(10));
             const top10GamesPromise = await getDocs(top10Query);
             try {
                 const top10Games = [];
@@ -58,10 +58,10 @@ export default function Leaderboards(props) {
                                 </Badge>
                                 <Container className='d-flex flex-column'>
                                     <div>
-                                        {game.user_id}
+                                        {game.user}
                                     </div>
                                     <div>
-                                        {game.duration_sec}
+                                        {game.duration}
                                     </div>
                                 </Container>
                             </ListGroup.Item>
