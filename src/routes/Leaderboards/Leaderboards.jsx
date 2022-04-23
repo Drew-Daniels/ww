@@ -45,7 +45,7 @@ export default function Leaderboards(props) {
     }
 
     return (
-        <Container fluid className='d-flex justify-content-center flex-grow-1'>
+        <Container as='main' fluid className='d-flex justify-content-center flex-grow-1'>
             <ListGroup variant='flush'>
                 {!loaded && placeholders }
                 {loaded &&

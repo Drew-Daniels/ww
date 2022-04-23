@@ -6,14 +6,12 @@ import './Game.scss';
 export default function Game(props) {
 
     return (
-        <Container fluid className='d-flex flex-grow-1'>
-            <Row className='d-flex flex-grow-1'>
-                <Col lg={3}>
-                    <SideBar />    
-                </Col>
-                <Col>
-                    <Arena />    
-                </Col>
+        <Container fluid className='d-flex flex-column flex-grow-1'>
+            <Row className='d-flex p-2'>
+                <SideBar />
+            </Row>
+            <Row className='flex-grow-1 p-2'>
+                <Arena className='flex-grow-1'/>    
             </Row>
         </Container>
     )

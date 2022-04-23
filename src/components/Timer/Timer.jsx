@@ -9,13 +9,13 @@ export default function Timer() {
 
     return (
         <Container className='d-flex align-items-center timer'>
-            <Row className='d-flex flex-grow-1 justify-content-center align-items-center'>
-                <Col className='d-flex flex-grow-1 justify-content-center align-items-center'>
+            <Row className='d-flex justify-content-center align-items-center'>
+                <Col className='d-flex justify-content-center align-items-center'>
                     <IconContext.Provider value={{ size: '1em' }}>
                         <TimerIcon className='timer-icon spin' />    
                     </IconContext.Provider>
                 </Col>
-                <Col className='d-flex flex-grow-1 justify-content-center align-items-center'>
+                <Col className='d-flex justify-content-center align-items-center'>
                     <span>00:00</span>
                 </Col>
             </Row>

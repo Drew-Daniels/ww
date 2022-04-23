@@ -5,7 +5,7 @@ import './CharacterLegend.scss';
 export default function CharacterLegend(props) {
 
     return (
-        <Container>
+        <Container fluid className='d-flex flex-grow-1 justify-content-center align-items-center'>
             characters will go here
         </Container>
     )
