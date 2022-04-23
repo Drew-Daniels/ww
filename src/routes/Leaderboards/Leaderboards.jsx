@@ -53,7 +53,7 @@ export default function Leaderboards(props) {
                         i++
                         return (
                             <ListGroup.Item key={i} as='li' className="d-flex justify-content-between align-items-start">
-                                <Badge bg={i === 1 ? 'warning': 'success'} pill>
+                                <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
                                     {i}
                                 </Badge>
                                 <Container className='d-flex flex-column'>
