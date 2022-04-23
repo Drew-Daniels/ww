@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, ListGroup, Badge, Placeholder } from 'react-bootstrap';
+import { Container, ListGroup, Badge, Placeholder, Row, Col } from 'react-bootstrap';
 import {
     query,
     collection,
@@ -46,24 +46,32 @@ export default function Leaderboards(props) {
 
     return (
         <Container as='main' fluid className='d-flex justify-content-center flex-grow-1'>
-            <ListGroup variant='flush'>
+            <ListGroup className='d-flex justify-content-center flex-grow-1' variant='flush'>
                 {!loaded && placeholders }
                 {loaded &&
                     games.map((game, i) => {
                         i++
                         return (
-                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-between align-items-start">
-                                <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
-                                    {i}
-                                </Badge>
-                                <Container className='d-flex flex-column'>
-                                    <div>
-                                        {game.user}
-                                    </div>
-                                    <div>
-                                        {game.duration}
-                                    </div>
-                                </Container>
+                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-center align-items-center">
+                                <Row>
+                                    <Col lg={6} className="d-flex justify-content-end align-items-center">
+                                        <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
+                                            {i}
+                                        </Badge>
+                                    </Col>
+                                    <Col lg={6}>
+                                        <Container>
+                                            <div>
+                                                {game.user}
+                                            </div>
+                                            <div>
+                                                {game.duration}
+                                            </div>
+                                        </Container>
+                                    </Col>
+                                </Row>
+
+
                             </ListGroup.Item>
                         )
                     })
