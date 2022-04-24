@@ -40,12 +40,15 @@ export default function Arena(props) {
                 <Spinner animation="border" variant="danger" />
             }
             {loaded &&
-                <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image' onMouseMove={handleMouseMove} />
+                    <>
+                        <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image' onMouseMove={handleMouseMove} />
+                        <CustomCursor x={x} y={y} />
+                    </>
             }
             {clicked &&
                 <Choices x={x} y={y} />
             }
-            <CustomCursor x={x} y={y} />
+
         </Container>
     )
 }
