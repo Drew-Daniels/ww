@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import { getImageURL } from '../../helpers/storHelpers';
+
 import './Arena.scss';
 
 export default function Arena(props) {
@@ -20,12 +21,12 @@ export default function Arena(props) {
     }, [])
 
     return (
-        <Container as='main' fluid className='d-flex flex-grow-1 justify-content-center align-items-center'>
+        <Container as='main' fluid className='d-flex flex-grow-1 justify-content-center align-items-center custom-cursor'>
             {!loaded &&
                 <Spinner animation="border" variant="danger" />
             }
             {loaded &&
-                <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image' />
+                <img src={arenaURL} alt='The Garden of Earthly Delights triptych' className='arena-image'/>
             }
         </Container>
     )
