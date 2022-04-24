@@ -18,12 +18,12 @@ export default function Timer() {
     return (
         <Container fluid className='d-flex align-items-center timer'>
             <Row className='d-flex flex-grow-1 justify-content-center align-items-center'>
-                <Col lg={3} className='d-flex justify-content-center align-items-center'>
-                    <IconContext.Provider value={{ size: '1em' }}>
+                <Col lg={12} className='d-flex justify-content-center align-items-center'>
+                    <IconContext.Provider value={{ size: '2em' }}>
                         <TimerIcon className='timer-icon spin' />    
                     </IconContext.Provider>
                 </Col>
-                <Col lg={9} className='d-flex justify-content-center align-items-center'>
+                <Col lg={12} className='d-flex justify-content-center align-items-center'>
                     <span className='text-center'>{`${seconds} seconds`}</span>
                 </Col>
             </Row>

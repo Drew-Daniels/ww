@@ -8,10 +8,10 @@ export default function SideBar(props) {
     return (
         <Container fluid className='d-flex'>
             <Row className='d-flex flex-grow-1'>
-                <Col lg={3}>
+                <Col lg={4}>
                     <Timer />
                 </Col>
-                <Col lg={9} className='d-flex align-items-center'>
+                <Col lg={8} className='d-flex align-items-center'>
                     <CharacterLegend />
                 </Col>
             </Row>
