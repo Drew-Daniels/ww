@@ -1,12 +1,13 @@
 import { IconContext } from 'react-icons';
 import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import AppIcon from '../../icons/app-icon.svg';
 
 import './Navbar.scss';
 
 export default function CustomNavbar(props) {
 
-    const { AppIcon, appTitle, routes } = props;
+    const { appTitle, routes } = props;
 
     return (
         <Navbar expand='lg' bg='dark' variant='dark'>
@@ -15,9 +16,7 @@ export default function CustomNavbar(props) {
                         <Navbar.Brand href='/' className='d-flex flex-grow-1 align-items-center justify-content-center'>
                             <Row className='d-flex'>
                                 <Col xs={12} sm={2} className='d-flex justify-content-center align-items-center'>
-                                    <IconContext.Provider value={{ size: '2em', color: '#fd5252'}}>
-                                        <AppIcon />
-                                    </IconContext.Provider>
+                                    <img src={AppIcon} alt='Magnifying Glass' className='app-icon' />
                                 </Col>
                                 <Col sm={9} className='d-flex align-items-center justify-content-center'>
                                     <h1>{appTitle}</h1>

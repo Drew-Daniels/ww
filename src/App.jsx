@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
-import { FaSearch as AppIcon } from 'react-icons/fa';
 import { RiHomeFill as HomeIcon } from 'react-icons/ri';
 import { FaGamepad as GameIcon } from 'react-icons/fa';
 import { MdSportsScore as LeaderboardsIcon } from 'react-icons/md';
@@ -34,7 +33,7 @@ function App(props) {
   return (
     <Container fluid className='App d-flex flex-column flex-grow-1 min-vh-100 px-0'>
       <Container fluid className='d-flex flex-column flex-grow-1 px-0'>
-        <Navbar AppIcon={AppIcon} appTitle={appTitle} routes={routes} />
+        <Navbar appTitle={appTitle} routes={routes} />
         <Outlet context={{
           getImageURL: getImageURL,
         }}/>
