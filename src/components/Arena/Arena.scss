@@ -1,7 +1,14 @@
+.arena {
+   position: relative;
+   z-index: 1;
+}
 .arena-image {
    width: 100%;
    height: auto;
 }
-.custom-cursor {
-   cursor: url('./cursor-icon.svg') 64 64, auto;
+#arena:hover {
+   // cursor: none;
+}
+#arena:hover .custom-cursor {
+   display: block;
 }
