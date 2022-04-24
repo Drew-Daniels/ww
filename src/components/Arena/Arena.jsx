@@ -21,6 +21,7 @@ export default function Arena(props) {
     function handleMouseMove(e) {
         setX(prevState => { return e.pageX - 64});
         setY(prevState => { return e.pageY - 64});
+        setClicked(prevState => {return false})
     }
 
     useEffect(() => {
