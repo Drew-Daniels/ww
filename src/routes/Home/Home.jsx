@@ -27,9 +27,9 @@ export default function Home(props) {
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0'>
-            <Container fluid className='d-flex flex-column'>
+            <Container fluid className='d-flex flex-column flex-grow-1 justify-content-between'>
                 <h1 className='text-center'>Welcome!</h1>
-                <div className='d-flex justify-content-center mb-5'>
+                <div className='d-flex flex-grow-1 justify-content-center align-items-center mb-5'>
                     {!loaded &&
                         <Spinner animation="border" variant="danger" />
                     }
@@ -39,12 +39,8 @@ export default function Home(props) {
                 </div>                    
                 <div className='d-flex justify-content-center'>
                     {!loaded &&
-                        <Placeholder as='p' animation='glow'>
-                            <Placeholder xs={10} style={{ marginLeft: '4em' }}/>
+                        <Placeholder as='p' animation='glow' className='d-flex flex-grow-1'>
                             <Placeholder xs={12} />
-                            <Placeholder xs={12} />
-                            <Placeholder xs={12} />
-                            <Placeholder xs={4} />
                         </Placeholder>
                     }
                     {loaded &&

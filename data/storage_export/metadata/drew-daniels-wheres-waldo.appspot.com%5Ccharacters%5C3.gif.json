@@ -1,0 +1,20 @@
+{
+  "name": "characters/3.gif",
+  "bucket": "drew-daniels-wheres-waldo.appspot.com",
+  "contentType": "image/gif",
+  "metageneration": 1,
+  "generation": 1650908914455,
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "cacheControl": "public, max-age=3600",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "b96cd806-f18e-4b27-a85e-ea7725340cf8"
+  ],
+  "etag": "ZuLijPZzx1JA1f2MXsuAq/Ucbog",
+  "timeCreated": "2022-04-25T17:48:34.454Z",
+  "updated": "2022-04-25T17:48:34.466Z",
+  "size": 1102356,
+  "md5Hash": "ywy8pZj/k9F0ktLWMWeykg==",
+  "crc32c": "2761991798"
+}
