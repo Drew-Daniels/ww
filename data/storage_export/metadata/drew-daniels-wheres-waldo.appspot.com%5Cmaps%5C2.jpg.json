@@ -1,0 +1,20 @@
+{
+  "name": "maps/2.jpg",
+  "bucket": "drew-daniels-wheres-waldo.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1650904930346,
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "cacheControl": "public, max-age=3600",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "61c9c97e-c19a-49eb-ab8b-bad6fc588cae"
+  ],
+  "etag": "fSg+p/CT4nxeknptDypAMzhat6M",
+  "timeCreated": "2022-04-25T16:42:10.345Z",
+  "updated": "2022-04-25T16:42:10.352Z",
+  "size": 1069103,
+  "md5Hash": "U0v+3Cso/K8F6RKOisCDZg==",
+  "crc32c": "3871970525"
+}

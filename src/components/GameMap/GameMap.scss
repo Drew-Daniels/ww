@@ -1,0 +1,14 @@
+.game-map {
+   position: relative;
+   z-index: 1;
+}
+.game-map-image {
+   width: 100%;
+   height: auto;
+}
+#game-map:hover {
+   cursor: none;
+}
+#game-map:hover .custom-cursor {
+   display: block;
+}

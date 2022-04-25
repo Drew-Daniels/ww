@@ -15,7 +15,7 @@ export default function Home(props) {
         //FUNCTIONS
         async function retreivePortrait() {
             try {
-                const url = await getImageURL('images','hieronymus-bosch-portrait.jfif');
+                const url = await getImageURL('images','waldo.gif');
                 setPortraitURL(url);
                 setLoaded(true);
             }
@@ -27,16 +27,17 @@ export default function Home(props) {
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0'>
-            <Container as='figure' className='figure'>
-                <div className='frame mb-5'>
+            <Container fluid className='d-flex flex-column'>
+                <h1 className='text-center'>Welcome!</h1>
+                <div className='d-flex justify-content-center mb-5'>
                     {!loaded &&
                         <Spinner animation="border" variant="danger" />
                     }
                     {loaded &&
-                        <img src={portraitURL} alt="Hieronymus Bosch portrait" />
+                        <img src={portraitURL} alt="Hieronymus Bosch portrait" className='waldo-image' />
                     }
                 </div>                    
-                <blockquote className='blockquote'>
+                <div className='d-flex justify-content-center'>
                     {!loaded &&
                         <Placeholder as='p' animation='glow'>
                             <Placeholder xs={10} style={{ marginLeft: '4em' }}/>
@@ -47,36 +48,17 @@ export default function Home(props) {
                         </Placeholder>
                     }
                     {loaded &&
-                        <p className='bio'>
-                            Hieronymus Bosch [...] was a Dutch/Netherlandish painter from Brabant.
-                            He is one of the most notable representatives of the Early Netherlandish painting school.
-                            His work, generally oil on oak wood, mainly contains fantastic illustrations of religious concepts and narratives.
-                            Within his lifetime his work was collected in the Netherlands, Austria, and Spain, and widely copied, especially his macabre and nightmarish depictions of hell.
+                        <p className='welcome-message'>
+                            This is a Where's Waldo game that uses Egor Klyuchnyk's artwork. His portfolio can be found at
+                            {' '}
+                            <a href="https://www.behance.net/Chekavo">Behance</a>
+                            {' and '}
+                            <a href="https://www.artstation.com/chekavo">Artstation</a>
+                            .
                         </p>
                     }
-                </blockquote>
-                <figcaption className='blockquote-footer figure-caption text-end'>
-                    {!loaded &&
-                        <Placeholder as='cite' animation='glow' className='d-flex justify-content-end'>
-                            <Placeholder xs={3} />
-                        </Placeholder>
-                    }
-                    {loaded &&
-                        <cite title='Wikipedia' href='https://en.wikipedia.org/wiki/Hieronymus_Bosch'>Wikipedia</cite>
-                    }
-                </figcaption>
+                </div>
             </Container>
         </Container>
     )
-
-    async function retrievePortrait() {
-        try {
-            const url = await getImageURL('images','hieronymus-bosch-portrait.jfif');
-            setPortraitURL(url);
-            setLoaded(true);
-        }
-        catch(err) {
-            console.error(err)
-        }
-    }
 }

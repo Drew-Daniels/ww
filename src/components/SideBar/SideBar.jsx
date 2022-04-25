@@ -5,14 +5,16 @@ import './SideBar.scss';
 
 export default function SideBar(props) {
 
+    const { mapId } = props;
+
     return (
         <Container fluid className='d-flex'>
             <Row className='d-flex flex-grow-1'>
-                <Col lg={4}>
+                <Col lg={3}>
                     <Timer />
                 </Col>
-                <Col lg={8} className='d-flex align-items-center'>
-                    <CharacterLegend />
+                <Col lg={9} className='d-flex align-items-center'>
+                    <CharacterLegend mapId={mapId} />
                 </Col>
             </Row>
         </Container>

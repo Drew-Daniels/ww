@@ -4,8 +4,6 @@ import { getImageURL } from '../../helpers/storHelpers';
 import {
     query,
     collection,
-    orderBy,
-    limit,
     getDocs,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -22,6 +20,7 @@ class Character {
 
 export default function CharacterLegend(props) {
 
+    const { mapId } = props;
     const [loaded, setLoaded] = useState(false);
     const [characters, setCharacters] = useState([]);
 
@@ -31,7 +30,8 @@ export default function CharacterLegend(props) {
         /**
          * Creates Character objects that will hold a reference to all data needed to present characters
          * in the character legend component
-         * TODO: Use async.parallel() to make this step faster
+         * TODO: Refactor this code not to rely on the order between the storage items in 'Characters' folder and and 
+         * the firestore db 'characters' collection being the same.
          */
         async function getCharacters() {
             const characterImagesArr = await getCharacterImages();
@@ -47,6 +47,7 @@ export default function CharacterLegend(props) {
         }
         /**
          * Retrieves Character images from Firebase Storage
+         * TODO: Use async.parallel() to make this step faster
          * @returns 
          */
         async function getCharacterImages() {
@@ -82,7 +83,7 @@ export default function CharacterLegend(props) {
 
     return (
         <Container fluid className='d-flex flex-grow-1 justify-content-center align-items-center'>
-            <ListGroup className='d-flex'>
+            <ListGroup className='d-flex flex-grow-1 flex-row'>
                 {characters.map((character, i) => {
                     const { name, difficulty, imgURL } = character;
                     return (
