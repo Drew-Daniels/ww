@@ -33,55 +33,49 @@ export default function GameChoices(props) {
     }, [])
 
     return (
-        <Container fluid className='d-flex flex-grow-1'>
-            <Card className='d-flex flex-grow-1 m-5 map-choice-card'>
-                <Card.Title className='text-center'>{'Map name here'}</Card.Title>
-                <div className='d-flex flex-column flex-grow-1 justify-content-center align-items-center'>
-                    {!loaded &&
-                        <Spinner animation="border" variant="danger" className='map-choice' />
-                    }
-                    {loaded &&
-                        <Card.Img
-                            src={map1URL}
-                            alt='Map 1'
-                            className='map-choice-image'
-                        />
-                    }
-                </div>
-                <Card.Body className='d-flex flex-column flex-grow-1 justify-content-end align-items-center'>
-                    <Link to='1' className='btn btn-danger btn-game-choice'>
-                        <span>Play</span>
-                        {' '}
-                        <IconContext.Provider value={{ size: '1em' }}>
-                            <PlayIcon />
-                        </IconContext.Provider>
-                    </Link>
-                </Card.Body>
-            </Card>
-            <Card className='d-flex flex-grow-1 m-5 map-choice-card'>
-                <Card.Title className='text-center'>{'Map name here'}</Card.Title>
-                <div className='d-flex flex-column flex-grow-1 justify-content-center align-items-center'>
-                    {!loaded &&
-                        <Spinner animation="border" variant="danger" className='map-choice' />
-                    }
-                    {loaded &&
-                        <Card.Img
-                            src={map2URL}
-                            alt='Map 2'
-                            className='map-choice-image'
-                        />
-                    }
-                </div>
-                <Card.Body className='d-flex flex-column flex-grow-1 justify-content-end align-items-center'>
-                    <Link to='2' className='btn btn-danger btn-game-choice'>
-                        <span>Play</span>
-                        {' '}
-                        <IconContext.Provider value={{ size: '1em' }}>
-                            <PlayIcon />
-                        </IconContext.Provider>
-                    </Link>
-                </Card.Body>
-            </Card>
+        <Container fluid className='d-flex flex-grow-1 justify-content-around'>
+            <Link to='1' className='d-flex flex-grow-1'>
+                <Card className='d-flex flex-grow-1 map-choice-card'>
+                    <Card.Header className='text-center'>
+                        <div className='btn btn-danger'>
+                            <span className='text-decoration-none'>Ultimate Space Battle</span>
+                        </div>
+                    </Card.Header>
+                    <div className='d-flex flex-column flex-grow-1 justify-content-center align-items-center'>
+                        {!loaded &&
+                            <Spinner animation="border" variant="danger" className='map-choice' />
+                        }
+                        {loaded &&
+                            <Card.Img
+                                src={map1URL}
+                                alt='Map 1'
+                                className='map-choice-image'
+                            />
+                        }
+                    </div>
+                </Card>
+            </Link>
+            <Link to='2' className='d-flex flex-grow-1' >
+                <Card className='d-flex flex-grow-1 map-choice-card'>
+                    <Card.Header className='text-center'>
+                        <div className='btn btn-danger'>
+                            <span className='text-decoration-none'>Ultimate Space Battle</span>
+                        </div>
+                    </Card.Header>
+                    <Card.Body className='d-flex flex-column flex-grow-1 justify-content-center align-items-center'>
+                        {!loaded &&
+                            <Spinner animation="border" variant="danger" className='map-choice' />
+                        }
+                        {loaded &&
+                            <Card.Img
+                                src={map2URL}
+                                alt='Map 2'
+                                className='map-choice-image'
+                            />
+                        }
+                    </Card.Body>
+                </Card>
+            </Link>
         </Container>
     )
 }
