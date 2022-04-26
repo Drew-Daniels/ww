@@ -1,100 +1,93 @@
-import { UserFactory, GameFactory } from './factories';
+import { GameFactory as gf } from './factories';
 
-describe('UserFactory', () => {
-    describe('id', () => {
-        it('accepts an integer greater than 0', () => {
-            expect(UserFactory(1)).toMatchObject({ id: 1 });
+describe('gf', () => {
+    describe('map_id', () => {
+        it('accepts a positive integer', () => {
+            expect(gf(1)).toMatchObject({ map_id: 1 });
         });
-        it('does NOT accept a decimal', () => {
-            expect(() => UserFactory(1.1)).toThrow();
+        it('DOES not accept a decimal', () => {
+            expect(() => gf(1.1)).toThrow();
         });
-        it('does NOT accept a 0', () => {
-            expect(() => UserFactory(0)).toThrow();
+        it('DOES not accept 0', () => {
+            expect(() => gf(0)).toThrow();
         });
-        it('does NOT accept a negative integer', () => {
-            expect(() => UserFactory(-1)).toThrow();
+        it('DOES not accept a negative integer', () => {
+            expect(() => gf(-1)).toThrow();
         });
-        it('does NOT accept no value being passed', () => {
-            expect(() => UserFactory()).toThrow();
+        it('DOES not accept a negative decimal', () => {
+            expect(() => gf(-1.1)).toThrow();
         });
-
     });
-    describe('name', () => {
+    describe('username', () => {
         it('accepts undefined', () => {
-            expect(UserFactory(1)).toMatchObject({ name: '' });
+            expect(gf(1)).toMatchObject({ username: '' });
         });
         it('accepts a blank string', () => {
-            expect(UserFactory(1, '')).toMatchObject({ name: '' });
-        });
-        it('accepts a passed-in string', () => {
-            expect(UserFactory(1, 'spam')).toMatchObject({ name: 'spam' });
+            expect(gf(1, '')).toMatchObject({ username: '' })
+        })
+        it('accepts a non-blank string', () => {
+            expect(gf(1, 'spam')).toMatchObject({ username: 'spam' })
         });
         it('accepts an integer', () => {
-            expect(UserFactory(1, 1)).toMatchObject({ name: '1' });
+            expect(gf(1, 1)).toMatchObject({ username: '1' });
         });
         it('accepts a decimal', () => {
-            expect(UserFactory(1, 1.1)).toMatchObject({ name: '1.1' });
+            expect(gf(1, 1.1)).toMatchObject({ username: '1.1' });
         });
         it('accepts symbols', () => {
-            expect(UserFactory(1, '#$%^&*@!~_+=?')).toMatchObject({ name: '#$%^&*@!~_+=?' });
+            expect(gf(1, '!@#$%^&*+=-?`')).toMatchObject({ username: '!@#$%^&*+=-?`' })
         });
-    });
-});
-
-describe('GameFactory', () => {
-    describe('id', () => {
-
-    });
-    describe('user_id', () => {
-        it('accepts a positive integer', () => {
-            expect(GameFactory(1)).toMatchObject({ user_id: 1 })
-        });
-        it('does NOT accept a positive decimal', () => {
-            expect(() => GameFactory(1.1)).toThrow();
-        });
-        it('does NOT accept a 0', () => {
-            expect(() => GameFactory(0)).toThrow();
-        });
-        it('does NOT accept a negative integer', () => {
-            expect(() => GameFactory(-1)).toThrow();
-        });
-        it('does NOT accept a negative decimal', () => {
-            expect(() => GameFactory(-1.1)).toThrow();
-        });
-        it('does NOT accept a string', () => {
-            expect(() => GameFactory('spam')).toThrow();
-        });
-        it('does NOT accept undefined', () => {
-            expect(() => GameFactory()).toThrow();
-        })
     });
     describe('duration', () => {
-        it('accepts a positive integer', () => {
-            expect(GameFactory(1, 30)).toMatchObject({ duration: 30 })
+        it('accepts undefined', () => {
+            expect(gf(1)).toMatchObject({ duration: 0 })
         });
         it('accepts 0', () => {
-            expect(GameFactory(1, 0)).toMatchObject({ duration: 0 })
+            expect(gf(1, 1, 0)).toMatchObject({ duration: 0 })
         });
-        it('accepts undefined', () => {
-            expect(GameFactory(1)).toMatchObject({ duration: 0 })
+        it('accepts a positive integer', () => {
+            expect(gf(1, 1, 1)).toMatchObject({ duration: 1 })
         });
-        it('does NOT accept a positive decimal', () => {
-            expect(() => GameFactory(1, 30.1)).toThrow();
+        it('does NOT accept a decimal', () => {
+            expect(() => gf(1, 1, 1.1)).toThrow()
         });
         it('does NOT accept a negative integer', () => {
-            expect(() => GameFactory(1, -30)).toThrow();
+            expect(() => gf(1, 1, -1)).toThrow()
         });
         it('does NOT accept a negative decimal', () => {
-            expect(() => GameFactory(1, -30.1)).toThrow();
-        });
-        it('does NOT accept a string', () => {
-            expect(() => GameFactory(1, 'spam')).toThrow();
+            expect(() => gf(1, 1, -1.1)).toThrow()
         });
     });
     describe('is_complete', () => {
-
-    });
-    describe('map_id', () => {
-
+        it('accepts undefined', () => {
+            expect(gf(1, 1, 1)).toMatchObject({ is_complete: false });
+        });
+        it('accepts true', () => {
+            expect(gf(1, 1, 1, true)).toMatchObject({ is_complete: true });
+        });
+        it('accepts false', () => {
+            expect(gf(1, 1, 1, false)).toMatchObject({ is_complete: false });
+        });
+        it('accepts 1', () => {
+            expect(gf(1, 1, 1, 1)).toMatchObject({ is_complete: true });
+        });
+        it('accepts 0', () => {
+            expect(gf(1, 1, 1, 0)).toMatchObject({ is_complete: false });
+        });
+        it('does NOT accept a string', () => {
+            expect(() => gf(1, 1, 1, 'spam')).toThrow();
+        });
+        it('does NOT accept an integer greater than 1', () => {
+            expect(() => gf(1, 1, 1, 2)).toThrow();
+        });
+        it('does NOT accept an integer less than 0', () => {
+            expect(() => gf(1, 1, 1, -1)).toThrow();
+        });
+        it('does NOT accept a decimal greater than 1', () => {
+            expect(() => gf(1, 1, 1, 1.1)).toThrow();
+        });
+        it('does NOT accept a decimal less than 0', () => {
+            expect(() => gf(1, 1, 1, -1.1)).toThrow();
+        });
     });
 });

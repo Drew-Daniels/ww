@@ -6,7 +6,7 @@ deleteDoc,
 setDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
-import { UserFactory, GameFactory } from './factories';
+import { GameFactory } from './factories';
 import { randIntBetween } from './math';
 
 async function resetDummyDb() {
@@ -23,14 +23,8 @@ async function teardownDummyDb() {
 
     // DEFINITIONS
     async function removeAll() {
-        await Promise.all([
-        removeGames(),
-        removeUsers(),
-        ])
+        await removeGames();
         console.log('All collections emptied');
-    }
-    async function removeUsers() {
-        removeAllDocs('users');
     }
     async function removeGames() {
         removeAllDocs('games');
@@ -54,35 +48,8 @@ async function teardownDummyDb() {
  */
 function initDummyDb() {
     
-    addAll();
+    addGames(15);
     
-    // DEFINITIONS
-    async function addAll() {
-        try {
-            await Promise.all([
-                addUsers(),
-                addGames(),
-            ])
-            console.log('All collections filled with new data');
-        }
-        catch(err) {
-            console.error(err);
-        }
-    }
-    async function addUsers(numUsers) {
-        try {
-            await Promise.all(
-                [...Array(numUsers).keys()].map(i => addUser(i, i))
-            )
-            console.log(`${numUsers} users added to the "users" Firestore db collection`);
-        }
-        catch (err) {
-            console.error(err);
-        }
-    }
-    async function addUser(id, name) {
-        return setDoc(doc(db, 'users', id), UserFactory(id, name));
-    }
     async function addGames(numGames) {
         try {
             await Promise.all(
@@ -94,18 +61,21 @@ function initDummyDb() {
             console.error(err);
         }
     }
-    async function addGame(id, userId, duration) {
-        try {
-            return setDoc(doc(db, 'games', id), GameFactory(userId, duration));
-        }
-        catch(err) {
-            console.error(err);
-        }
+}
+
+async function addGame(id, userId, duration) {
+    try {
+        return setDoc(doc(db, 'games', id), GameFactory(userId, duration));
+    }
+    catch(err) {
+        console.error(err);
     }
 }
+
 
 export {
     resetDummyDb,
     teardownDummyDb,
     initDummyDb,
+    addGame,
 }
