@@ -42,6 +42,9 @@ describe('UserFactory', () => {
 });
 
 describe('GameFactory', () => {
+    describe('id', () => {
+
+    });
     describe('user_id', () => {
         it('accepts a positive integer', () => {
             expect(GameFactory(1)).toMatchObject({ user_id: 1 })
@@ -87,5 +90,11 @@ describe('GameFactory', () => {
         it('does NOT accept a string', () => {
             expect(() => GameFactory(1, 'spam')).toThrow();
         });
-    })
+    });
+    describe('is_complete', () => {
+
+    });
+    describe('map_id', () => {
+
+    });
 });
