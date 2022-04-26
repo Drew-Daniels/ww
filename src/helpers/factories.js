@@ -1,5 +1,5 @@
 import { randIntBetween } from "./math";
-import { genUsername } from 'unique-username-generator';
+import {generateUsername} from 'unique-username-generator';
 /**
  * 
  * @param {integer} map_id 
@@ -44,7 +44,7 @@ export const GameFactory = ({map_id=1, username='', duration=0, is_complete=fals
 export const getRandGameData = () => {
     return {
         map_id: randIntBetween(0, 1), 
-        username: genUsername.generateUsername(), 
+        username: generateUsername(), 
         duration: randIntBetween(0, 90),
         is_complete: randIntBetween(0, 1),
     }
