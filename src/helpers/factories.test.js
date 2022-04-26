@@ -1,6 +1,8 @@
-import { GameFactory as gf } from './factories';
+import { GameFactory as gf, randGameData as rgd } from './factories';
 
-describe('gf', () => {
+// TODO: Refactor these tests to use test.each instead to be less repetitive and more readable
+// https://blog.theodo.com/2018/09/jest-each-tests/
+describe('GameFactory', () => {
     describe('map_id', () => {
         it('accepts a positive integer', () => {
             expect(gf({ map_id: 1 })).toMatchObject({ map_id: 1 });
@@ -68,6 +70,12 @@ describe('gf', () => {
         it('accepts false', () => {
             expect(gf({ is_complete: false })).toMatchObject({ is_complete: false });
         });
+        it('accepts 1', () => {
+            expect(gf({ is_complete: 1 })).toMatchObject({ is_complete: true });
+        });
+        it('accepts 0', () => {
+            expect(gf({ is_complete: 0 })).toMatchObject({ is_complete: false });
+        });
         it('does NOT accept true as string', () => {
             expect(() => gf({ is_complete: 'true' })).toThrow();
         });
@@ -87,4 +95,11 @@ describe('gf', () => {
             expect(() => gf({ is_complete: -.1 })).toThrow();
         });
     });
+});
+
+describe('getRandGameData', () => {
+    it.todo('generates a map_id between 0 and 1');
+    it.todo('generates a username as a string');
+    it.todo('generates a duration between 0 and 90');
+    it.todo('generates an is_complete value between 0 and 1')
 });
