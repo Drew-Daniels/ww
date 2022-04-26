@@ -32,7 +32,6 @@ class Character {
 }
 
 const maps = [];
-const characters = [];
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
