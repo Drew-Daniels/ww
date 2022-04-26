@@ -24,14 +24,26 @@ export const UserFactory = (id, name) => {
  * @returns Game object
  */
 export const GameFactory = (user_id, duration) => {
+    
+    duration = duration ? duration: 0;
+
+    if (!user_id) {
+        throw new Error('user_id must be provided');
+    }
     if (!Number.isSafeInteger(user_id)) {
         throw new Error('user_id must be an integer');
     }
     if (user_id < 1) {
         throw new Error('user_id must be 1 or greater');
     }
+    if (!Number.isSafeInteger(duration)) {
+        throw new Error('duration must be an integer')
+    }
     if (duration < 0) {
         throw new Error('duration must be 0 or greater')
     }
-    return { user_id, duration };
+    return { 
+        user_id, 
+        duration
+    };
 }
