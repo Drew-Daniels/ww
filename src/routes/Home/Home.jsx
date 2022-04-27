@@ -34,7 +34,7 @@ export default function Home(props) {
                         <Spinner animation="border" variant="danger" />
                     }
                     {loaded &&
-                        <img src={portraitURL} alt="Hieronymus Bosch portrait" className='waldo-image' />
+                        <img src={portraitURL} alt="Waldo Gif" className='waldo-image' />
                     }
                 </div>                    
                 <div className='d-flex justify-content-center'>
