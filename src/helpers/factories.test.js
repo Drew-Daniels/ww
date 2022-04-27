@@ -1,7 +1,7 @@
 import { GameFactory as gf, getRandGameData } from './factories';
-import { toBeOneOf, toBeInteger, toBePositive, toBeString } from 'jest-extended';
+import { toBeOneOf, toBeInteger, toBePositive, toBeString, toBeWithin } from 'jest-extended';
 
-expect.extend({ toBeOneOf, toBeInteger,toBePositive, toBeString });
+expect.extend({ toBeOneOf, toBeInteger,toBePositive, toBeString, toBeWithin });
 // TODO: Refactor these tests to use test.each instead to be less repetitive and more readable
 // https://blog.theodo.com/2018/09/jest-each-tests/
 describe('GameFactory', () => {
@@ -112,53 +112,54 @@ describe('GameFactory', () => {
 });
 
 describe('getRandGameData', () => {
-    var randGameData;
+    var rgd;
+    var map_id, username, duration, is_complete;
+
     beforeAll(() => {
-        randGameData = getRandGameData();
+        rgd = getRandGameData();
+        ({ map_id, username, duration, is_complete } = rgd);
     })
     describe('properties', () => {
         test('HAS map_id', () => {
-            expect(randGameData).toHaveProperty('map_id');
+            expect(rgd).toHaveProperty('map_id');
         });
         test('HAS username', () => {
-            expect(randGameData).toHaveProperty('username');
+            expect(rgd).toHaveProperty('username');
         });
         test('HAS duration', () => {
-            expect(randGameData).toHaveProperty('duration');
+            expect(rgd).toHaveProperty('duration');
         });
         test('HAS is_complete', () => {
-            expect(randGameData).toHaveProperty('is_complete');
+            expect(rgd).toHaveProperty('is_complete');
         });
     });
     describe('data types', () => {
-        test('RETURNED map_id === integer', () => {
-            expect(randGameData.map_id).toBeInteger();
+        test('RETURNED map_id IS integer', () => {
+            expect(map_id).toBeInteger();
         });
-        test('RETURNED username === string', () => {
-            expect(randGameData.username).toBeString();
+        test('RETURNED username IS string', () => {
+            expect(username).toBeString();
         });
-        test('RETURNED duration ==== integer', () => {
-            expect(randGameData.duration).toBeInteger();
+        test('RETURNED duration IS integer', () => {
+            expect(duration).toBeInteger();
         });
-        test('RETURNED is_complete === integer', () => {
-            expect(randGameData.is_complete).toBeInteger();
+        test('RETURNED is_complete IS integer', () => {
+            expect(is_complete).toBeInteger();
         });
     });
     describe('values', () => {
-        test('VALUE is_complete === 0 or 1', () => {
-            expect(randGameData.is_complete).toBeOneOf([0, 1]);
+        test('VALUE is_complete EITHER 0 or 1', () => {
+            expect(is_complete).toBeOneOf([0, 1]);
         });
-    })
-    it.todo('generates a map_id between 0 and 1', () => {
-        
-    });
-    it.todo('generates a username as a string', () => {
-
-    });
-    it.todo('generates a duration between 0 and 90', () => {
-
-    });
-    it.todo('generates an is_complete value between 0 and 1', () => {
-
+        it.todo('VALUE map_id EITHER 0 or 1', () => {
+            expect(map_id).toBeOneOf([0, 1]);
+        });
+        // no value testing needed for 'username' - can be any string
+        it.todo('VALUE duration BETWEEN 0 and 90', () => {
+            expect(duration).toBeWithin(0, 90);
+        });
+        it.todo('VALUE is_complete EITHER 0 and 1', () => {
+            expect(duration).toBeOneOf([0, 1]);
+        });
     });
 });
