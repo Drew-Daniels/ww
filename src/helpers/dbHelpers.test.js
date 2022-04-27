@@ -6,9 +6,7 @@ describe('addGame', () => {
     beforeAll(() => {
         gameData = getRandGameData();
     });
-    it.todo('adds a game with provided data', () => {
-        
-    });
+    it.todo('adds a game with provided data');
 });
 
 describe('addGames', () => {
@@ -18,17 +16,9 @@ describe('addGames', () => {
     afterEach(() => {
         // remove added games
     })
-    it.todo('adds 1 game', () => {
-
-    });
-    it.todo('adds 10 games', () => {
-
-    });
-    it.todo('DOES not add 0 games', () => {
-
-    });
-    it.todo('DOES not add -1 games', () => {
-
-    });
+    it.todo('adds 1 game');
+    it.todo('adds 10 games');
+    it.todo('DOES not add 0 games');
+    it.todo('DOES not add -1 games');
 });
 

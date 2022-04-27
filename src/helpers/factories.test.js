@@ -85,10 +85,10 @@ describe('GameFactory', () => {
             expect(gf({ is_complete: 0 })).toMatchObject({ is_complete: false });
         });
         test('PASS 1 as string => ERROR', () => {
-            expect(gf({ is_complete: '1' })).toThrow();
+            expect(() => gf({ is_complete: '1' })).toThrow();
         });
         test('PASS 0 as string => ERROR', () => {
-            expect(gf({ is_complete: '0' })).toThrow();
+            expect(() => gf({ is_complete: '0' })).toThrow();
         });        
         test('PASS true as string => ERROR', () => {
             expect(() => gf({ is_complete: 'true' })).toThrow();
@@ -148,18 +148,15 @@ describe('getRandGameData', () => {
         });
     });
     describe('values', () => {
-        test('VALUE is_complete EITHER 0 or 1', () => {
-            expect(is_complete).toBeOneOf([0, 1]);
-        });
-        it.todo('VALUE map_id EITHER 0 or 1', () => {
+        test('VALUE map_id EITHER 0 or 1', () => {
             expect(map_id).toBeOneOf([0, 1]);
         });
         // no value testing needed for 'username' - can be any string
-        it.todo('VALUE duration BETWEEN 0 and 90', () => {
+        test('VALUE duration BETWEEN 0 and 90', () => {
             expect(duration).toBeWithin(0, 90);
         });
-        it.todo('VALUE is_complete EITHER 0 and 1', () => {
-            expect(duration).toBeOneOf([0, 1]);
+        test('VALUE is_complete EITHER 0 and 1', () => {
+            expect(is_complete).toBeOneOf([0, 1]);
         });
     });
 });
