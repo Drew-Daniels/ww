@@ -2,7 +2,6 @@ import {
     ref,
     getDownloadURL,
 } from 'firebase/storage';
-
 import { storage } from '../firebase';
 
 /**

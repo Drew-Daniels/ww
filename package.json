@@ -29,7 +29,8 @@
     "deploy": "npm run build && firebase deploy",
     "em-startup": "firebase emulators:start --import=./data",
     "em-shutdown": "firebase emulators:export ./data",
-    "sass-watch": "sass --watch src/stylesheets/scss/App.scss src/stylesheets/css/App.css"
+    "sass-watch": "sass --watch src/stylesheets/scss/App.scss src/stylesheets/css/App.css",
+    "cov": "npm run test -- --coverage"
   },
   "eslintConfig": {
     "extends": [
