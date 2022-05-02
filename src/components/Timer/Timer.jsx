@@ -1,19 +1,12 @@
-import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { IconContext } from 'react-icons';
 import { RiTimer2Fill as TimerIcon } from 'react-icons/ri';
 
 import './Timer.scss';
 
-export default function Timer() {
+export default function Timer(props) {
 
-    const [seconds, setSeconds] = useState(0);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSeconds(seconds + 1)
-        }, 1000)
-    })
+    const {duration} = props;
 
     return (
         <Container fluid className='d-flex align-items-center timer'>
@@ -24,7 +17,7 @@ export default function Timer() {
                     </IconContext.Provider>
                 </Col>
                 <Col lg={12} className='d-flex justify-content-center align-items-center'>
-                    <span className='text-center'>{`${seconds} seconds`}</span>
+                    <span className='text-center'>{`${duration} seconds`}</span>
                 </Col>
             </Row>
         </Container>

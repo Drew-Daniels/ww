@@ -4,6 +4,8 @@ import { ImEnter as PlayIcon } from 'react-icons/im';
 import { Container, Card, Spinner, Placeholder, Button } from 'react-bootstrap';
 import { getImageURL } from '../../helpers/storHelpers';
 import { Link } from "react-router-dom"
+import { GameFactory } from '../../helpers/factories';
+import { addGame } from '../../helpers/dbHelpers';
 
 import './GameChoices.scss';
 
@@ -30,7 +32,7 @@ export default function GameChoices(props) {
             const url = await getImageURL('maps', id + '.jpg');
             setterFn(url);
         }
-    }, [])
+    }, []);
 
     return (
         <Container fluid className='d-flex flex-grow-1 justify-content-around'>

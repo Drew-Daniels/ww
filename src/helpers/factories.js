@@ -1,12 +1,13 @@
 import { randIntBetween } from "./math";
-import {generateUsername} from 'unique-username-generator';
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
+
 /**
- * 
+ * Creates a Game object that tracks game-related data for db storage
  * @param {integer} map_id 
  * @param {string} username
  * @param {integer} duration 
  * @param {boolean} is_complete 
- * @returns 
+ * @returns [Object]
  */
 export const GameFactory = ({map_id=1, username='', duration=0, is_complete=false} = {}) => {
     // MAP_ID
@@ -41,10 +42,22 @@ export const GameFactory = ({map_id=1, username='', duration=0, is_complete=fals
     };
 }
 
+/**
+ * Generates dummy game data to simulate real data that will be generated as users play games
+ * @returns [Object]
+ */
 export const getRandGameData = () => {
+
+    function getRandUsername(length) {
+        return uniqueNamesGenerator({
+            dictionaries: [adjectives, animals, colors],
+            length: length,
+        });
+    }
+
     return {
         map_id: randIntBetween(0, 1), 
-        username: generateUsername(), 
+        username: getRandUsername(3), 
         duration: randIntBetween(0, 90),
         is_complete: randIntBetween(0, 1),
     }

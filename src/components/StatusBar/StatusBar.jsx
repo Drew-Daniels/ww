@@ -1,20 +1,20 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import CharacterLegend from '../CharacterLegend/CharacterLegend';
 import Timer from '../Timer/Timer';
-import './SideBar.scss';
+import './StatusBar.scss';
 
-export default function SideBar(props) {
+export default function StatusBar(props) {
 
-    const { mapId } = props;
+    const { duration, characters } = props;
 
     return (
         <Container fluid className='d-flex'>
             <Row className='d-flex flex-grow-1'>
                 <Col lg={3}>
-                    <Timer />
+                    <Timer duration={duration} />
                 </Col>
                 <Col lg={9} className='d-flex align-items-center'>
-                    <CharacterLegend mapId={mapId} />
+                    <CharacterLegend characters={characters} />
                 </Col>
             </Row>
         </Container>

@@ -28,13 +28,14 @@ const routes = [
 
 function App(props) {
 
-  const { getImageURL } = props;
+  const { db, getImageURL } = props;
 
   return (
     <Container fluid className='App d-flex flex-column flex-grow-1 min-vh-100 px-0'>
       <Container fluid className='d-flex flex-column flex-grow-1 px-0'>
         <Navbar appTitle={appTitle} routes={routes} />
         <Outlet context={{
+          db: db,
           getImageURL: getImageURL,
         }}/>
       </Container>

@@ -6,7 +6,10 @@ describe('addGame', () => {
     beforeAll(() => {
         gameData = getRandGameData();
     });
-    it.todo('adds a game with provided data');
+    it('adds a game with provided data', async () => {
+        const result = addGame(gameData);
+        await expect(result).resolves.toEqual(true);
+    });
 });
 
 describe('addGames', () => {
