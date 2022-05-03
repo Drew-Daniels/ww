@@ -9,10 +9,11 @@ import { query, where, getDocs, collection } from 'firebase/firestore';
 import './Game.scss';
 
 class Character {
-    constructor(id, name, difficulty, imgURL) {
-        this.id = id;
+    constructor(name, difficulty, x, y, imgURL) {
         this.name = name;
         this.difficulty = difficulty;
+        this.x = x;
+        this.y = y;
         this.imgURL = imgURL;
     }
 }
@@ -29,6 +30,7 @@ export default function Game(props) {
     const [mapId, setMapId] = useState(parseInt(mapIdParam));
     const [mapName, setMapName] = useState('');
     const [characters, setCharacters] = useState([]);
+    const [characterData, setCharacterData] = useState([]);
     const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(null);
     const [isComplete, setIsComplete] = useState(false);
@@ -44,7 +46,7 @@ export default function Game(props) {
             await Promise.all([
                 loadMapImage(),
                 loadMapData(),
-                getCharacters(),
+                getCharacterData(),
             ]);
             setLoaded(true);
         };
@@ -61,7 +63,11 @@ export default function Game(props) {
             return true;
         };
 
-        async function getCharacters() {
+        async function loadCharacters() {
+
+        }
+
+        async function getCharacterData() {
             const mapsRef = collection(db, 'maps');
             const mapQuery = query(mapsRef, where('name', '==', mapName));
             const mapSnap = await getDocs(mapQuery);
@@ -69,9 +75,12 @@ export default function Game(props) {
             mapSnap.forEach(async (doc) => {
                 const charactersRef = collection(doc.ref, 'characters');
                 const charactersDocs = await getDocs(charactersRef);
-                charactersDocs.forEach((doc) => {
-                    characters.push(doc.data());
-                })
+                charactersDocs.forEach(async (doc) => {
+                    const characterData = doc.data();
+                    const characterImgURL = await getImageURL('characters', characterData.name + '.gif');
+                    const character = new Character(characterData.name, characterData.difficulty, characterData.coordinates.x, characterData.coordinates.y, characterImgURL);
+                    characters.push(character);
+                });
             })
             setCharacters(characters);
             console.log(characters);
