@@ -11,11 +11,13 @@ import { query, where, getDocs, collection } from 'firebase/firestore';
 import './Game.scss';
 
 class Character {
-    constructor(name, difficulty, x, y, imgURL) {
+    constructor(name, difficulty, x_min, x_max, y_min, y_max, imgURL) {
         this.name = name;
         this.difficulty = difficulty;
-        this.x = x;
-        this.y = y;
+        this.x_min = x_min;
+        this.x_max = x_max;
+        this.y_min = y_min;
+        this.y_max = y_max;
         this.imgURL = imgURL;
         this.isFound = false;
     }
@@ -74,9 +76,10 @@ export default function Game(props) {
                 const charactersRef = collection(doc.ref, 'characters');
                 const charactersDocs = await getDocs(charactersRef);
                 charactersDocs.forEach(async (doc) => {
-                    const characterData = doc.data();
-                    const characterImgURL = await getImageURL('characters', characterData.name + '.gif');
-                    const character = new Character(characterData.name, characterData.difficulty, characterData.coordinates.x, characterData.coordinates.y, characterImgURL);
+                    const { name, difficulty, coordinates } = doc.data();
+                    const { x_min, x_max, y_min, y_max } = coordinates;
+                    const characterImgURL = await getImageURL('characters', name + '.gif');
+                    const character = new Character(name, difficulty, x_min, x_max, y_min, y_max, characterImgURL);
                     characters.push(character);
                 });
             })
