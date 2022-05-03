@@ -2,12 +2,20 @@ import { useParams } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import StatusBar from "../StatusBar/StatusBar";
 import GameMap from '../GameMap/GameMap';
-import { addGame } from "../../helpers/dbHelpers";
 import { getImageURL } from "../../helpers/storHelpers";
 import { useState, useEffect, useRef } from "react";
-import { GameFactory } from "../../helpers/factories";
-import { useOutletContext } from "react-router-dom";
+import { query, where, getDocs, collection } from 'firebase/firestore';
+
 import './Game.scss';
+
+class Character {
+    constructor(id, name, difficulty, imgURL) {
+        this.id = id;
+        this.name = name;
+        this.difficulty = difficulty;
+        this.imgURL = imgURL;
+    }
+}
 
 /**
  * 
@@ -15,10 +23,11 @@ import './Game.scss';
  * @returns 
  */
 export default function Game(props) {
+    const { db } = props;
     const { mapIdParam } = useParams();
-    const { db } = useOutletContext();
     
     const [mapId, setMapId] = useState(parseInt(mapIdParam));
+    const [mapName, setMapName] = useState('');
     const [characters, setCharacters] = useState([]);
     const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(null);
@@ -33,28 +42,44 @@ export default function Game(props) {
 
         async function setup() {
             await Promise.all([
-                getMap(),
+                loadMapImage(),
+                loadMapData(),
                 getCharacters(),
             ]);
             setLoaded(true);
         };
 
-        async function getMap() {
+        async function loadMapData() {
+            const mapName = mapId === 1 ? 'Robot City': 'Ultimate Space Battle';
+            setMapName(mapName);
+            return true;
+        }
+
+        async function loadMapImage() {
             const url = await getImageURL('maps', mapIdParam + '.jpg');
             setMapImageURL(url);
             return true;
         };
 
         async function getCharacters() {
-            // const mapRef = doc(db, 'maps', String(map.id));
-            // const mapSnap = await getDoc(mapRef);
-            // const mapCharacters = await mapSnap.get('characters');
-            // console.log(mapCharacters);
-            // setCharacters()
+            const mapsRef = collection(db, 'maps');
+            const mapQuery = query(mapsRef, where('name', '==', mapName));
+            const mapSnap = await getDocs(mapQuery);
+            const characters = [];
+            mapSnap.forEach(async (doc) => {
+                const charactersRef = collection(doc.ref, 'characters');
+                const charactersDocs = await getDocs(charactersRef);
+                charactersDocs.forEach((doc) => {
+                    characters.push(doc.data());
+                })
+            })
+            setCharacters(characters);
+            console.log(characters);
             return true;
         };
-    }, [mapIdParam])
+    }, [db, mapIdParam, mapId, mapName])
 
+    // timer logic - https://overreacted.io/making-setinterval-declarative-with-react-hooks/
     useInterval(() => {
         setDuration(duration + 1);
     }, 1000)
@@ -89,7 +114,6 @@ export default function Game(props) {
             <Row className='flex-grow-1 p-2'>
                 <GameMap 
                     loaded={loaded}
-                    db={db} 
                     mapImageURL={mapImageURL} 
                     characters={characters} 
                     className='flex-grow-1'

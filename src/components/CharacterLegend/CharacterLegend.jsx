@@ -1,25 +1,7 @@
-import { useState, useEffect } from 'react';
 import { Container, ListGroup, Card, Badge } from 'react-bootstrap';
-import { getImageURL } from '../../helpers/storHelpers';
-import {
-    query,
-    collection,
-    getDocs,
-} from 'firebase/firestore';
-import { db } from '../../firebase';
 import './CharacterLegend.scss';
 
-class Character {
-    constructor(id, name, difficulty, imgURL) {
-        this.id = id;
-        this.name = name;
-        this.difficulty = difficulty;
-        this.imgURL = imgURL;
-    }
-}
-
 export default function CharacterLegend(props) {
-
     const { characters } = props;
 
     return (
@@ -42,7 +24,6 @@ export default function CharacterLegend(props) {
                     )
                 })}
             </ListGroup>
-            
         </Container>
     )
 

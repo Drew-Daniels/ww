@@ -4,7 +4,7 @@ import App from './App';
 import Home from './routes/Home/Home';
 import GameBase from './routes/GameBase/GameBase';
 import GameChoices from './components/GameChoices/GameChoices';
-import GameArena from './components/Game/Game';
+import Game from './components/Game/Game';
 import Leaderboards from './routes/Leaderboards/Leaderboards';
 import {
   BrowserRouter,
@@ -33,18 +33,18 @@ class Character {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App db={db} getImageURL={getImageURL} />}>
+        <Route path='/' element={<App getImageURL={getImageURL} />}>
           <Route index element={<Home />} />
           <Route path='game' element={<GameBase />} >
             <Route index element={<GameChoices />} />
-            <Route path=':mapIdParam' element={<GameArena />} />
+            <Route path=':mapIdParam' element={<Game db={db} />} />
           </Route>
           <Route path='leaderboards' element={<Leaderboards />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
