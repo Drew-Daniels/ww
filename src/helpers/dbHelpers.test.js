@@ -1,18 +1,18 @@
-import { addGame, addGames, initDummyDb, teardownDummyDb, resetDummyDb } from './dbHelpers';
+import { saveGame, saveGames, initDummyDb, teardownDummyDb, resetDummyDb } from './dbHelpers';
 import { getRandGameData } from './factories';
 
-describe('addGame', () => {
+describe('saveGame', () => {
     var gameData;
     beforeAll(() => {
         gameData = getRandGameData();
     });
     it('adds a game with provided data', async () => {
-        const result = addGame(gameData);
+        const result = saveGame(gameData);
         await expect(result).resolves.toEqual(true);
     });
 });
 
-describe('addGames', () => {
+describe('saveGames', () => {
     beforeEach(() => {
         // create random game data for 'n' games
     })

@@ -68,56 +68,15 @@ describe('GameFactory', () => {
             expect(() => gf({ duration: -1.1 })).toThrow()
         });
     });
-    describe('is_complete', () => {
-        test('PASS undefined => SUCCESS', () => {
-            expect(gf()).toMatchObject({ is_complete: false });
-        });
-        test('PASS true => SUCCESS', () => {
-            expect(gf({ is_complete: true })).toMatchObject({ is_complete: true });
-        });
-        test('PASS false => SUCCESS', () => {
-            expect(gf({ is_complete: false })).toMatchObject({ is_complete: false });
-        });
-        test('PASS 1 as number => SUCCESS', () => {
-            expect(gf({ is_complete: 1 })).toMatchObject({ is_complete: true });
-        });
-        test('PASS 0 as number => SUCCESS', () => {
-            expect(gf({ is_complete: 0 })).toMatchObject({ is_complete: false });
-        });
-        test('PASS 1 as string => ERROR', () => {
-            expect(() => gf({ is_complete: '1' })).toThrow();
-        });
-        test('PASS 0 as string => ERROR', () => {
-            expect(() => gf({ is_complete: '0' })).toThrow();
-        });        
-        test('PASS true as string => ERROR', () => {
-            expect(() => gf({ is_complete: 'true' })).toThrow();
-        });
-        test('PASS false as string => ERROR', () => {
-            expect(() => gf({ is_complete: 'false' })).toThrow();
-        });
-        test('PASS integer > 1  => ERROR', () => {
-            expect(() => gf({ is_complete: 2 })).toThrow();
-        });
-        test('PASS integer < 0 => ERROR', () => {
-            expect(() => gf({ is_complete: -1 })).toThrow();
-        });
-        test('PASS decimal > 1 => ERROR', () => {
-            expect(() => gf({ is_complete: 1.1 })).toThrow();
-        });
-        test('PASS decimal < 0 => ERROR', () => {
-            expect(() => gf({ is_complete: -.1 })).toThrow();
-        });
-    });
 });
 
 describe('getRandGameData', () => {
     var rgd;
-    var map_id, username, duration, is_complete;
+    var map_id, username, duration;
 
     beforeAll(() => {
         rgd = getRandGameData();
-        ({ map_id, username, duration, is_complete } = rgd);
+        ({ map_id, username, duration} = rgd);
     })
     describe('properties', () => {
         test('HAS map_id', () => {
@@ -128,9 +87,6 @@ describe('getRandGameData', () => {
         });
         test('HAS duration', () => {
             expect(rgd).toHaveProperty('duration');
-        });
-        test('HAS is_complete', () => {
-            expect(rgd).toHaveProperty('is_complete');
         });
     });
     describe('data types', () => {
@@ -143,9 +99,6 @@ describe('getRandGameData', () => {
         test('RETURNED duration IS integer', () => {
             expect(duration).toBeInteger();
         });
-        test('RETURNED is_complete IS integer', () => {
-            expect(is_complete).toBeInteger();
-        });
     });
     describe('values', () => {
         test('VALUE map_id EITHER 0 or 1', () => {
@@ -154,9 +107,6 @@ describe('getRandGameData', () => {
         // no value testing needed for 'username' - can be any string
         test('VALUE duration BETWEEN 0 and 90', () => {
             expect(duration).toBeWithin(0, 90);
-        });
-        test('VALUE is_complete EITHER 0 and 1', () => {
-            expect(is_complete).toBeOneOf([0, 1]);
         });
     });
 });

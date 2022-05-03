@@ -11,6 +11,8 @@ import './GameChoices.scss';
 
 export default function GameChoices(props) {
 
+    const { characters } = props;
+
     const [loaded, setLoaded] = useState(false);
     const [map1URL, setMap1URL] = useState('');
     const [map2URL, setMap2URL] = useState('');

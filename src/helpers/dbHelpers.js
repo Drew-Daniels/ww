@@ -37,7 +37,7 @@ export async function teardownDummyDb() {
  * Adds dummy data to the database for development purposes
  */
 export async function initDummyDb() {    
-    addGames(15);
+    saveGames(15);
 }
 
 /**
@@ -45,7 +45,7 @@ export async function initDummyDb() {
  * @param {*} gameData 
  * @returns Boolean
  */
-export async function addGame(gameData) {
+export async function saveGame(gameData) {
     await addDoc(collection(db, 'games'), GameFactory(gameData));
     return true;
 }
@@ -54,12 +54,12 @@ export async function addGame(gameData) {
  * Adds dummy games documents to the 'games' collection for development purposes
  * @param {integer} numGames 
  */    
-export async function addGames(gameDataArray) {
+export async function saveGames(gameDataArray) {
     if (!Array.isArray(gameDataArray)) {
         throw new Error('argument must be an array');
     }
     await Promise.all(
-        [...Array(gameDataArray.length).keys()].map(async (gameDataObj, i) => addGame(gameDataArray[i]))
+        [...Array(gameDataArray.length).keys()].map(async (gameDataObj, i) => saveGame(gameDataArray[i]))
     )
     console.log(`${gameDataArray.length} games added to the "games" Firestore db collection`);
     return true;

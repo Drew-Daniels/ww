@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import StatusBar from "../StatusBar/StatusBar";
 import GameMap from '../GameMap/GameMap';
+import { GameFactory } from '../../helpers/factories';
+import { saveGame } from "../../helpers/dbHelpers";
 import { getImageURL } from "../../helpers/storHelpers";
 import { useState, useEffect, useRef } from "react";
 import { query, where, getDocs, collection } from 'firebase/firestore';
@@ -34,9 +36,9 @@ export default function Game(props) {
     const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
-    
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
+    const [gameFormDisplayed, setGameFormDisplayed] = useState(false);
 
     // Initial setup
     useEffect(() => {
@@ -105,6 +107,34 @@ export default function Game(props) {
             }
         }, [delay]);
     }
+
+    useEffect(() => {
+        if (isComplete) {
+            showGameForm();
+        } else {
+            hideGameForm();
+        }
+    }, [isComplete])
+
+    function handleGameEnd() {
+        // show GameForm and collect username from user
+        showGameForm();
+        // const gameData = GameFactory({
+        //     map_id: mapId,
+        //     username: username,
+        //     duration: duration,
+        // });
+        // saveGame(gameData);
+    }
+
+    function showGameForm() {
+        setGameFormDisplayed(true);
+    };
+    function hideGameForm() {
+        setGameFormDisplayed(false);
+    };
+
+
 
     return (
         <>
