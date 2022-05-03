@@ -1,19 +1,19 @@
 {
-  "name": "characters/2.gif",
+  "name": "characters/General Grievous.gif",
   "bucket": "drew-daniels-wheres-waldo.appspot.com",
   "contentType": "image/gif",
   "metageneration": 1,
-  "generation": 1650908845542,
+  "generation": 1651590485141,
   "storageClass": "STANDARD",
   "contentDisposition": "inline",
   "cacheControl": "public, max-age=3600",
   "contentEncoding": "identity",
   "downloadTokens": [
-    "54369984-811a-4a6e-a395-51ab81a7bb11"
+    "1813cc13-2194-47e8-a5c8-fe624b259373"
   ],
-  "etag": "PPhSLSn0xQbeyvVQUcxammMj2bc",
-  "timeCreated": "2022-04-25T17:47:25.541Z",
-  "updated": "2022-04-25T17:47:25.549Z",
+  "etag": "Rxf2Kv8BO+5sTzRtUtsRoGH22nM",
+  "timeCreated": "2022-05-03T15:08:05.140Z",
+  "updated": "2022-05-03T15:08:05.146Z",
   "size": 555709,
   "md5Hash": "iboABJvbxgDgb1k8qWC8JA==",
   "crc32c": "4293989779"

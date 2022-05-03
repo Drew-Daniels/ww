@@ -5,16 +5,16 @@ import './StatusBar.scss';
 
 export default function StatusBar(props) {
 
-    const { duration, characters } = props;
+    const { loaded, duration, characters } = props;
 
     return (
         <Container fluid className='d-flex'>
-            <Row className='d-flex flex-grow-1'>
+            <Row className='d-flex flex-grow-1 align-items-center'>
                 <Col lg={3}>
-                    <Timer duration={duration} />
+                    <Timer loaded={loaded} duration={duration} />
                 </Col>
                 <Col lg={9} className='d-flex align-items-center'>
-                    <CharacterLegend characters={characters} />
+                    <CharacterLegend loaded={loaded} characters={characters} />
                 </Col>
             </Row>
         </Container>

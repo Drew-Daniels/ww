@@ -1,0 +1,20 @@
+{
+  "name": "characters/Sonic.gif",
+  "bucket": "drew-daniels-wheres-waldo.appspot.com",
+  "contentType": "image/gif",
+  "metageneration": 1,
+  "generation": 1651590816842,
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "cacheControl": "public, max-age=3600",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "e49755e3-425b-4504-a96d-bce65b3a98b8"
+  ],
+  "etag": "e4KMI8EQ0kJWGnfkDac12Xf9ELI",
+  "timeCreated": "2022-05-03T15:13:36.841Z",
+  "updated": "2022-05-03T15:13:36.842Z",
+  "size": 134059,
+  "md5Hash": "1A9xRP/X0RVVzquluyHqpg==",
+  "crc32c": "649812029"
+}

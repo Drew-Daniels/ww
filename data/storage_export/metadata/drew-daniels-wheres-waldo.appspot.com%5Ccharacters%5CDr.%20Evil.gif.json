@@ -1,19 +1,19 @@
 {
-  "name": "characters/3.gif",
+  "name": "characters/Dr. Evil.gif",
   "bucket": "drew-daniels-wheres-waldo.appspot.com",
   "contentType": "image/gif",
   "metageneration": 1,
-  "generation": 1650908914455,
+  "generation": 1651590491269,
   "storageClass": "STANDARD",
   "contentDisposition": "inline",
   "cacheControl": "public, max-age=3600",
   "contentEncoding": "identity",
   "downloadTokens": [
-    "b96cd806-f18e-4b27-a85e-ea7725340cf8"
+    "41a7e8ba-f662-4842-9534-8e7438e694b9"
   ],
-  "etag": "ZuLijPZzx1JA1f2MXsuAq/Ucbog",
-  "timeCreated": "2022-04-25T17:48:34.454Z",
-  "updated": "2022-04-25T17:48:34.466Z",
+  "etag": "WbDMBWJqUpVJZOKWn1iwKnz0/Sw",
+  "timeCreated": "2022-05-03T15:08:11.268Z",
+  "updated": "2022-05-03T15:08:11.278Z",
   "size": 1102356,
   "md5Hash": "ywy8pZj/k9F0ktLWMWeykg==",
   "crc32c": "2761991798"

@@ -1,19 +1,19 @@
 {
-  "name": "characters/1.gif",
+  "name": "characters/Mojo Jojo.gif",
   "bucket": "drew-daniels-wheres-waldo.appspot.com",
   "contentType": "image/gif",
   "metageneration": 1,
-  "generation": 1650905025261,
+  "generation": 1651590474189,
   "storageClass": "STANDARD",
   "contentDisposition": "inline",
   "cacheControl": "public, max-age=3600",
   "contentEncoding": "identity",
   "downloadTokens": [
-    "fe4c049d-f27a-4b72-b7e9-ba0bbbddf164"
+    "d9091dc9-c85b-4eff-82a9-b36b29d198a3"
   ],
-  "etag": "+JbZF8f4AEcWNZgbd59vdW6tUbE",
-  "timeCreated": "2022-04-25T16:43:45.260Z",
-  "updated": "2022-04-25T16:43:45.274Z",
+  "etag": "5Td2P89J5f20VkfCorYTXE1sV6s",
+  "timeCreated": "2022-05-03T15:07:54.188Z",
+  "updated": "2022-05-03T15:07:54.210Z",
   "size": 2990026,
   "md5Hash": "mu/2FiNlGzf1tFxQYgnt6g==",
   "crc32c": "3813409103"

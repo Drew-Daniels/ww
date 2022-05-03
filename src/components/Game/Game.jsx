@@ -15,6 +15,7 @@ class Character {
         this.x = x;
         this.y = y;
         this.imgURL = imgURL;
+        this.isFound = false;
     }
 }
 
@@ -30,9 +31,8 @@ export default function Game(props) {
     const [mapId, setMapId] = useState(parseInt(mapIdParam));
     const [mapName, setMapName] = useState('');
     const [characters, setCharacters] = useState([]);
-    const [characterData, setCharacterData] = useState([]);
     const [username, setUsername] = useState('');
-    const [duration, setDuration] = useState(null);
+    const [duration, setDuration] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     
     const [mapImageURL, setMapImageURL] = useState('');
@@ -46,7 +46,7 @@ export default function Game(props) {
             await Promise.all([
                 loadMapImage(),
                 loadMapData(),
-                getCharacterData(),
+                loadCharacters(),
             ]);
             setLoaded(true);
         };
@@ -64,10 +64,6 @@ export default function Game(props) {
         };
 
         async function loadCharacters() {
-
-        }
-
-        async function getCharacterData() {
             const mapsRef = collection(db, 'maps');
             const mapQuery = query(mapsRef, where('name', '==', mapName));
             const mapSnap = await getDocs(mapQuery);
@@ -83,7 +79,6 @@ export default function Game(props) {
                 });
             })
             setCharacters(characters);
-            console.log(characters);
             return true;
         };
     }, [db, mapIdParam, mapId, mapName])
