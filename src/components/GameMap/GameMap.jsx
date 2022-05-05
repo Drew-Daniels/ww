@@ -14,11 +14,10 @@ export default function GameMap(props) {
     const [imageHeight, setImageHeight] = useState(0);
     const [imageWidth, setImageWidth] = useState(0);
     const [imageMidpoint, setImageMidpoint] = useState(0);
-
+    const [leftBoundary, setLeftBoundary] = useState(0);
+    const [topBoundary, setTopBoundary] = useState(0);
     const [marked, setMarked] = useState(false);
-    // pageX and pageY track the click coordinates RELATIVE to html page
-    // since image width will be width of full page, pageX and imageX will always be the same
-    // however, pageY and imageY will differ because pageY will include heights of navbar and status bar whereas imageY should be an offset relative to the statusbar
+
     const [pageX, setPageX] = useState(0);
     const [pageY, setPageY] = useState(0);
 
@@ -31,6 +30,8 @@ export default function GameMap(props) {
 
     const [choicesX, setChoicesX] = useState(0);
     const [choicesY, setChoicesY] = useState(0);
+    const [mouseImgX, setMouseImgX] = useState(0);
+    const [mouseImgY, setMouseImgY] = useState(0);
     // mouseX and mouseY track the starting point for the top-left corner of the custom cursor, using an offset of
     // 64px up and to the left to center the custom cursor over the point clicked
     const [mouseX, setMouseX] = useState(0);
@@ -38,16 +39,14 @@ export default function GameMap(props) {
 
 
     function handleClick(e) {
+        const bounds = imageRef.current.getBoundingClientRect();
+        setLeftBoundary(prevLeftBounds => bounds.left);
+        setTopBoundary(prevTopBounds => bounds.top);
         setImageHeight(prevImageHeight => imageRef.current.clientHeight );
         setImageWidth(prevImageWidth => imageRef.current.clientWidth );
         setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2)
-        setImageX(prevImageX => e.pageX);
-        setImageY(prevImageY => e.pageY);
-        // center marker over clicked point by offsetting to the left and up
-        setMarkerX(prevMarkerX => { return imageX - 40 });
-        setMarkerY(prevMarkerY => { return imageY - 40 });
-        // if on the left side of the image, offset to the right
-        // if on the right side of the image, offset to the left
+        setMarkerX(prevMarkerX => { return e.pageX - 40 });
+        setMarkerY(prevMarkerY => { return e.pageY - 40 });
         setChoicesX(prevChoicesX => { return imageX < imageMidpoint ? imageX - 40: imageX - 350 });
         setChoicesY(prevChoicesY => { return imageY - 40 });
         setMarked(true);
@@ -65,16 +64,12 @@ export default function GameMap(props) {
         setMouseX(prevMouseX => { return imageX - 50});
         setMouseY(prevMouseY => { return imageY - 50});
         setImageX(prevImageX => { return e.pageX });
-        setImageY(prevImageY => { return e.pageY });
+        setImageY(prevImageY => { return e.pageY});
     };
 
     function handleChoiceSubmit(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('imageX: ' + imageX);
-        console.log('imageY: ' + imageY);
-        console.log('imageHeight: ' +  imageHeight)
-        console.log('imageWidth: ' + imageWidth)
         const inboundsCharacters = characters.filter(character => {
             const { x_min, x_max, y_min, y_max } = character;
             return isWithinBounds(imageX, imageY, x_min, x_max, y_min, y_max);
