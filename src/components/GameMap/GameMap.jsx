@@ -11,8 +11,14 @@ export default function GameMap(props) {
     const imageRef = useRef();
 
     const { loaded, mapImageURL, characters } = props;
-    const [imageHeight, setImageHeight] = useState(0);
-    const [imageWidth, setImageWidth] = useState(0);
+
+    // track the height and width of the client
+    const [clWidth, setClWidth] = useState(0);
+    const [clHeight, setClHeight] = useState(0);
+    // track the height and width of the image in CSS pixels
+    const [imHeight, setImHeight] = useState(0);
+    const [imWidth, setImWidth] = useState(0);
+
     const [imageMidpoint, setImageMidpoint] = useState(0);
     const [leftBoundary, setLeftBoundary] = useState(0);
     const [topBoundary, setTopBoundary] = useState(0);
@@ -20,36 +26,75 @@ export default function GameMap(props) {
 
     const [pageX, setPageX] = useState(0);
     const [pageY, setPageY] = useState(0);
-
-    // imageX and imageY track the click coordinates RELATIVE TO the map.
-    const [imageX, setImageX] = useState(0);
-    const [imageY, setImageY] = useState(0);
     
     const [markerX, setMarkerX] = useState(0);
     const [markerY, setMarkerY] = useState(0);
 
     const [choicesX, setChoicesX] = useState(0);
     const [choicesY, setChoicesY] = useState(0);
+    // mouseImgX/Y will track the mouse image location RELATIVE to mouseX/Y, centering the image over the exact position
     const [mouseImgX, setMouseImgX] = useState(0);
     const [mouseImgY, setMouseImgY] = useState(0);
+    // relX/Y will track the mouse location RELATIVE to map image boundaries
+    const [relX, setRelX] = useState(0);
+    const [relY, setRelY] = useState(0);
+    // absX/Y will track absolute pixel coordiantes relative to original image size
+    const [absX, setAbsX] = useState(0);
+    const [absY, setAbsY] = useState(0);
+
     // mouseX and mouseY track the starting point for the top-left corner of the custom cursor, using an offset of
     // 64px up and to the left to center the custom cursor over the point clicked
     const [mouseX, setMouseX] = useState(0);
     const [mouseY, setMouseY] = useState(0);
 
+    // useEffect(() => {
+    //     window.addEventListener('resize', handleResize);
+    //     setInitialImageSize();
+
+    //     function handleResize() {
+    //         const bounds = imageRef.current.getBoundingClientRect();
+    //         setClHeight(prevClHeight => imageRef.current.clientHeight );
+    //         setClWidth(prevClWidth => imageRef.current.clientWidth );
+    //         setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2)
+    //         setLeftBoundary(prevLeftBounds => bounds.left);
+    //         setTopBoundary(prevTopBounds => bounds.top);
+    //     }
+    //     function setInitialImageSize() {
+    //         setImHeight(prevImHeight => imageRef.current.naturalHeight );
+    //         setImWidth(prevImWidth => imageRef.current.naturalWidth );
+    //     }
+    // }, [])
+
+    useEffect(() => {
+        console.log('left: ' + leftBoundary);
+        console.log('top: ' + topBoundary);
+        console.log('relX: ' + relX);
+        console.log('relY: ' + relY);
+        console.log('absX: ' + absX);
+        console.log('absY: ' + absY);
+    }, [relX, relY, absX, absY, leftBoundary, topBoundary])
 
     function handleClick(e) {
-        const bounds = imageRef.current.getBoundingClientRect();
-        setLeftBoundary(prevLeftBounds => bounds.left);
-        setTopBoundary(prevTopBounds => bounds.top);
-        setImageHeight(prevImageHeight => imageRef.current.clientHeight );
-        setImageWidth(prevImageWidth => imageRef.current.clientWidth );
-        setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2)
-        setMarkerX(prevMarkerX => { return e.pageX - 40 });
-        setMarkerY(prevMarkerY => { return e.pageY - 40 });
-        setChoicesX(prevChoicesX => { return imageX < imageMidpoint ? imageX - 40: imageX - 350 });
-        setChoicesY(prevChoicesY => { return imageY - 40 });
+
+        handleResize();
+        setInitialImageSize();
+
+        setMarkerX(prevMarkerX => { return relX - 40 });
+        setMarkerY(prevMarkerY => { return relY - 40 });
+        setChoicesX(prevChoicesX => { return relX < imageMidpoint ? relX - 40: relX - 350 });
+        setChoicesY(prevChoicesY => { return relX - 40 });
         setMarked(true);
+
+        function handleResize() {
+            setClHeight(prevClHeight => imageRef.current.clientHeight );
+            setClWidth(prevClWidth => imageRef.current.clientWidth );
+            setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2)
+
+        }
+        function setInitialImageSize() {
+            setImHeight(prevImHeight => imageRef.current.naturalHeight );
+            setImWidth(prevImWidth => imageRef.current.naturalWidth );
+        }
     };
 
     /**
@@ -61,10 +106,22 @@ export default function GameMap(props) {
      * @param {event} e 
      */
     function handleMouseMove(e) {
-        setMouseX(prevMouseX => { return imageX - 50});
-        setMouseY(prevMouseY => { return imageY - 50});
-        setImageX(prevImageX => { return e.pageX });
-        setImageY(prevImageY => { return e.pageY});
+        const bounds = imageRef.current.getBoundingClientRect();
+        setLeftBoundary(prevLeftBounds => bounds.left);
+        setTopBoundary(prevTopBounds => bounds.top);
+        // track absolute mouse position on html page
+        setMouseX(prevMouseX => e.pageX);
+        setMouseY(prevMouseY => e.pageY);
+        // center mouse image over the exact position
+        setMouseImgX(prevMouseImgX => mouseX - 50);
+        setMouseImgY(prevMouseImgY => mouseY - 50);
+        // track mouse coordinates relative to map image boundaries and scrolled distance
+        // window.scrollX omitted on relX because the image will always take up 100% width of the viewport and will never be scrollable
+        setRelX(prevRelX => mouseX - leftBoundary);
+        setRelY(prevRelY => mouseY - topBoundary - window.scrollY);
+        // track absolute mouse coordinates relative to original image dimensions
+        setAbsX(prevAbsX => relX/clWidth * imWidth);
+        setAbsY(prevAbsY => relY/clWidth * imHeight);
     };
 
     function handleChoiceSubmit(e) {
@@ -72,7 +129,7 @@ export default function GameMap(props) {
         e.stopPropagation();
         const inboundsCharacters = characters.filter(character => {
             const { x_min, x_max, y_min, y_max } = character;
-            return isWithinBounds(imageX, imageY, x_min, x_max, y_min, y_max);
+            return isWithinBounds(absX, absY, x_min, x_max, y_min, y_max);
         });
         console.log(inboundsCharacters);
         
@@ -94,7 +151,7 @@ export default function GameMap(props) {
             {loaded &&
                     <>
                         <img src={mapImageURL} ref={imageRef} alt='Map' className='game-map-image'  />
-                        <CustomCursor x={mouseX} y={mouseY} />
+                        <CustomCursor x={mouseImgX} y={mouseImgY} />
                     </>
             }
             {marked &&
