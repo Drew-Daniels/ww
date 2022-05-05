@@ -8,7 +8,7 @@ export default function StatusBar(props) {
     const { loaded, duration, characters } = props;
 
     return (
-        <Container fluid className='d-flex'>
+        <Container fluid className='d-flex status-bar'>
             <Row className='d-flex flex-grow-1 align-items-center'>
                 <Col lg={3}>
                     <Timer loaded={loaded} duration={duration} />
