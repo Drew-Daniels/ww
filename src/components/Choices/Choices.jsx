@@ -8,7 +8,7 @@ export default function Choices(props) {
     const { x, y, characters, handleChoiceSubmit } = props;
 
     return (
-        <Form className='choices' style={{ left: `${x + 128}px`, top: `${y}px`}} onSubmit={handleChoiceSubmit} >
+        <Form className='choices' style={{ left: `${x + 128}px`, top: `${y}px`}} onSubmit={handleChoiceSubmit} onClick={e => e.stopPropagation()} >
             {characters.map((character, i) => {
                 return (
                     <Button key={i} type='submit' value='character-1' className='btn-base d-flex justify-content-between align-items-center' >

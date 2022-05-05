@@ -148,7 +148,7 @@ export default function Game(props) {
                     characters={characters} 
                 />
             </Row>
-            <Row className='flex-grow-1 p-2'>
+            <Row className='flex-grow-1'>
                 <GameMap 
                     loaded={loaded}
                     mapImageURL={mapImageURL} 

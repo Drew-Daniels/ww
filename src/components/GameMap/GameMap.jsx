@@ -15,14 +15,16 @@ export default function GameMap(props) {
     const [imageWidth, setImageWidth] = useState(0);
     const [imageMidpoint, setImageMidpoint] = useState(0);
 
-    const [clicked, setClicked] = useState(false);
     const [marked, setMarked] = useState(false);
+    // pageX and pageY track the click coordinates RELATIVE to html page
+    // since image width will be width of full page, pageX and imageX will always be the same
+    // however, pageY and imageY will differ because pageY will include heights of navbar and status bar whereas imageY should be an offset relative to the statusbar
+    const [pageX, setPageX] = useState(0);
+    const [pageY, setPageY] = useState(0);
+
     // imageX and imageY track the click coordinates RELATIVE TO the map.
     const [imageX, setImageX] = useState(0);
     const [imageY, setImageY] = useState(0);
-    // clickX and clickY track ACTUAL mouse coordinates
-    const [clickX, setClickX] = useState(0);
-    const [clickY, setClickY] = useState(0);
     
     const [markerX, setMarkerX] = useState(0);
     const [markerY, setMarkerY] = useState(0);
@@ -39,16 +41,15 @@ export default function GameMap(props) {
         setImageHeight(prevImageHeight => imageRef.current.clientHeight );
         setImageWidth(prevImageWidth => imageRef.current.clientWidth );
         setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2)
-        setImageX(prevImageX => e.clientX);
-        setImageY(prevImageY => e.clientY);
-        setClicked(true);
-        setMarkerX(prevMarkerX => { return clickX - 40 });
-        setMarkerY(prevMarkerY => { return clickY - 40 });
-        setChoicesX(prevChoicesX => 
-            // if on the left side of the image, offset to the right
-            // if on the right side of the image, offset to the left
-            { return clickX < imageMidpoint ? clickX - 40: clickX - 350 });
-        setChoicesY(prevChoicesY => { return clickY - 40 });
+        setImageX(prevImageX => e.pageX);
+        setImageY(prevImageY => e.pageY);
+        // center marker over clicked point by offsetting to the left and up
+        setMarkerX(prevMarkerX => { return imageX - 40 });
+        setMarkerY(prevMarkerY => { return imageY - 40 });
+        // if on the left side of the image, offset to the right
+        // if on the right side of the image, offset to the left
+        setChoicesX(prevChoicesX => { return imageX < imageMidpoint ? imageX - 40: imageX - 350 });
+        setChoicesY(prevChoicesY => { return imageY - 40 });
         setMarked(true);
     };
 
@@ -61,20 +62,15 @@ export default function GameMap(props) {
      * @param {event} e 
      */
     function handleMouseMove(e) {
-        setClickX(prevClickX => { return e.pageX });
-        setClickY(prevClickY => { return e.pageY });
-        setMouseX(prevMouseX => { return clickX - 50});
-        setMouseY(prevMouseY => { return clickY - 50});
-        setImageX(prevImageX => { return e.clientX });
-        setImageY(prevImageY => { return e.clientY });
-        setClicked(prevClicked => {return false});
+        setMouseX(prevMouseX => { return imageX - 50});
+        setMouseY(prevMouseY => { return imageY - 50});
+        setImageX(prevImageX => { return e.pageX });
+        setImageY(prevImageY => { return e.pageY });
     };
 
     function handleChoiceSubmit(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log('clickX: ' + clickX);
-        console.log('clickY: ' + clickY);
         console.log('imageX: ' + imageX);
         console.log('imageY: ' + imageY);
         console.log('imageHeight: ' +  imageHeight)
@@ -84,6 +80,9 @@ export default function GameMap(props) {
             return isWithinBounds(imageX, imageY, x_min, x_max, y_min, y_max);
         });
         console.log(inboundsCharacters);
+        
+        setMarked(prevMarked => false);
+
         function isWithinBounds(sourceX, sourceY, targetXMin, targetXMax, targetYMin, targetYMax) {
             return (
                 sourceX >= targetXMin && sourceX <= targetXMax &&
@@ -93,7 +92,7 @@ export default function GameMap(props) {
     }
 
     return (
-        <Container as='main' fluid id='game-map' className='d-flex flex-grow-1 justify-content-center align-items-center' onClick={handleClick} onMouseMove={handleMouseMove}>
+        <Container as='main' fluid id='game-map' className='d-flex flex-grow-1 justify-content-center align-items-center px-0' onClick={handleClick} onMouseMove={handleMouseMove}>
             {!loaded &&
                 <Spinner animation="border" variant="danger" />
             }
@@ -106,7 +105,7 @@ export default function GameMap(props) {
             {marked &&
                 <>
                     <Marker x={markerX} y={markerY} /> 
-                    <Choices x={choicesX} y={choicesY} characters={characters} handleChoiceSubmit={handleChoiceSubmit} />                
+                    <Choices x={choicesX} y={choicesY} characters={characters} handleChoiceSubmit={handleChoiceSubmit}/>                
                 </>
             }
         </Container>
