@@ -3,6 +3,7 @@ import { Container, ListGroup, Badge, Placeholder, Row, Col } from 'react-bootst
 import {
     query,
     collection,
+    where,
     orderBy,
     limit,
     getDocs,
@@ -13,23 +14,34 @@ import './Leaderboards.scss';
 export default function Leaderboards(props) {
 
     const [loaded, setLoaded] = useState(false);
-    const [games, setGames] = useState([]);
-
+    const [map1Records, setMap1Records] = useState([]);
+    const [map2Records, setMap2Records] = useState([]);
 
     useEffect(() => {
-        retrieveGames();
-        
+        setup();
+
         // FUNCTIONS
-        async function retrieveGames() {
-            const top10Query = query(collection(db, 'games'), orderBy('duration', 'asc'), limit(10));
-            const top10GamesPromise = await getDocs(top10Query);
+        async function setup() {
+            await setAllMapRecords();
+            setLoaded(true);
+        }
+        async function setAllMapRecords() {
+            Promise.all([
+                setMapRecords(1),
+                setMapRecords(2),
+            ])
+        }
+        async function setMapRecords(mapId, numRecords=10) {
+            const gamesRef = collection(db, 'games');
+            const topNQuery = query(gamesRef, where('map_id', '==', mapId), orderBy('duration', 'asc'), limit(numRecords));
+            const topNGamesPromise = await getDocs(topNQuery);
             try {
-                const top10Games = [];
-                top10GamesPromise.forEach((doc) => {
-                    top10Games.push(doc.data());
+                const topNGames = [];
+                topNGamesPromise.forEach((doc) => {
+                    topNGames.push(doc.data());
                 })
-                setGames(top10Games);
-                setLoaded(true);
+                const setter = mapId === 1 ? setMap1Records: setMap2Records;
+                setter(prevState => topNGames);
             }
             catch(err) {
                 console.error(err)
@@ -40,41 +52,72 @@ export default function Leaderboards(props) {
     var placeholders = [];
     for (let i=0; i < 10; i++) {
         placeholders.push(
-            <Placeholder key={i} xs={12} animation='glow' />
+            <Placeholder key={i} as={ListGroup.Item} xs={12} animation='glow'>
+                <Placeholder xs={12} />
+            </Placeholder>
         )
     }
 
     return (
         <Container as='main' fluid className='d-flex flex-grow-1'>
-            <ListGroup className='d-flex flex-grow-1' variant='flush'>
-                {!loaded && placeholders }
-                {loaded &&
-                    games.map((game, i) => {
-                        i++
-                        return (
-                            <ListGroup.Item key={i} as='li' className="d-flex justify-content-center">
-                                <Row>
-                                    <Col lg={6} className="d-flex justify-content-end align-items-center">
-                                        <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
-                                            {i}
-                                        </Badge>
-                                    </Col>
-                                    <Col lg={6}>
-                                        <Container>
-                                            <h2>
-                                                {game.user}
-                                            </h2>
-                                            <h3>
-                                                {game.duration}
-                                            </h3>
-                                        </Container>
-                                    </Col>
-                                </Row>
-                            </ListGroup.Item>
-                        )
-                    })
-                }
-            </ListGroup>
+            <Row className='d-flex flex-grow-1'>
+                <Col>
+                    <h1 className='text-center'>Robot City</h1>
+                    <ListGroup className='d-flex flex-grow-1' variant='flush'>
+                        {!loaded && placeholders }
+                        {loaded &&
+                            map1Records.map((record, i) => {
+                                i++
+                                return (
+                                    <ListGroup.Item key={i} as='li' className="d-flex justify-content-center">
+                                        <Row className='d-flex flex-grow-1'>
+                                            <Col lg={6} className="d-flex justify-content-end align-items-center">
+                                                <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
+                                                    {i}
+                                                </Badge>
+                                            </Col>
+                                            <Col lg={6}>
+                                                <Container className='d-flex'>
+                                                    <h1>{record.username}</h1>
+                                                    <span>{record.duration} seconds</span>
+                                                </Container>
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
+                                )
+                            })
+                        }
+                    </ListGroup>
+                </Col>
+                <Col>
+                    <h1 className='text-center'>Ultimate Space Battle</h1>
+                    <ListGroup className='d-flex flex-grow-1' variant='flush'>
+                        {!loaded && placeholders }
+                        {loaded &&
+                            map2Records.map((record, i) => {
+                                i++
+                                return (
+                                    <ListGroup.Item key={i} as='li' className="d-flex justify-content-center">
+                                        <Row className='d-flex flex-grow-1'>
+                                            <Col lg={6} className="d-flex justify-content-end align-items-center">
+                                                <Badge className={i === 1 ? 'gold': i=== 2 ? 'silver' : i=== 3 ? 'bronze' : 'other'} pill >
+                                                    {i}
+                                                </Badge>
+                                            </Col>
+                                            <Col lg={6}>
+                                                <Container className='d-flex'>
+                                                    <h1>{record.username}</h1>
+                                                    <span>{record.duration} seconds</span>
+                                                </Container>
+                                            </Col>
+                                        </Row>
+                                    </ListGroup.Item>
+                                )
+                            })
+                        }
+                    </ListGroup>
+                </Col>
+            </Row>
         </Container>
     )
 }

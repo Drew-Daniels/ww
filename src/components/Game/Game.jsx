@@ -135,9 +135,10 @@ export default function Game(props) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
+        const uname = formProps.username;
         const gameData = GameFactory({
             map_id: mapId,
-            username: formProps.username || '',
+            username: uname ? uname : 'Anonymous',
             duration: duration,
         });
         saveGame(gameData);
