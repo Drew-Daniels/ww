@@ -8,7 +8,7 @@ import './GameMap.scss';
 
 export default function GameMap(props) {
     const imageRef = useRef();
-    const { loaded, mapImageURL, characters } = props;
+    const { loaded, mapImageURL, characters, isComplete } = props;
 
     const [clWidth, setClWidth] = useState(0);
     const [clHeight, setClHeight] = useState(0);
@@ -216,7 +216,9 @@ export default function GameMap(props) {
             {loaded &&
                     <>
                         <img src={mapImageURL} ref={imageRef} alt='Map' className='game-map-image'  />
-                        <CustomCursor x={mouseImgX} y={mouseImgY} onMouseMove={handleMouseMove}/>
+                        {!isComplete &&
+                            <CustomCursor x={mouseImgX} y={mouseImgY} onMouseMove={handleMouseMove}/>
+                        }
                     </>
             }
             {marked &&

@@ -1,7 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Row } from "react-bootstrap";
 import StatusBar from "../StatusBar/StatusBar";
 import GameMap from '../GameMap/GameMap';
+import LeaderboardsForm from '../LeaderboardsForm/LeaderboardsForm';
 import { GameFactory } from '../../helpers/factories';
 import { saveGame } from "../../helpers/dbHelpers";
 import { getImageURL } from "../../helpers/storHelpers";
@@ -31,15 +32,17 @@ class Character {
 export default function Game(props) {
     const { db } = props;
     const { mapIdParam } = useParams();
+    const navigate = useNavigate();
     
     const [mapId, setMapId] = useState(parseInt(mapIdParam));
     const [mapName, setMapName] = useState('');
     const [characters, setCharacters] = useState([]);
     const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(0);
-    const [isComplete, setIsComplete] = useState(false);
+    const [isComplete, setIsComplete] = useState(true);
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
+    const [showLeaderboardsForm, setShowLeaderboardsForm] = useState(false);
     const [gameFormDisplayed, setGameFormDisplayed] = useState(false);
 
     // Initial setup
@@ -90,6 +93,7 @@ export default function Game(props) {
 
     // timer logic - https://overreacted.io/making-setinterval-declarative-with-react-hooks/
     useInterval(() => {
+        if (isComplete) { return }
         setDuration(duration + 1);
     }, 1000)
 
@@ -113,31 +117,24 @@ export default function Game(props) {
 
     useEffect(() => {
         if (isComplete) {
-            showGameForm();
-        } else {
-            hideGameForm();
+            // stop timer
+            // show game form
+            // save game
+            // show a message informing that game has been saved
+            // redirect to leaderboards
+            setShowLeaderboardsForm(true);
         }
     }, [isComplete])
 
-    function handleGameEnd() {
-        // show GameForm and collect username from user
-        showGameForm();
-        // const gameData = GameFactory({
-        //     map_id: mapId,
-        //     username: username,
-        //     duration: duration,
-        // });
-        // saveGame(gameData);
+    async function handleGameEnd() {
+        const gameData = GameFactory({
+            map_id: mapId,
+            username: username,
+            duration: duration,
+        });
+        saveGame(gameData);
+        navigate('/leaderboards');
     }
-
-    function showGameForm() {
-        setGameFormDisplayed(true);
-    };
-    function hideGameForm() {
-        setGameFormDisplayed(false);
-    };
-
-
 
     return (
         <>
@@ -148,12 +145,19 @@ export default function Game(props) {
                     characters={characters} 
                 />
             </Row>
+            <LeaderboardsForm 
+                duration={duration}
+                show={showLeaderboardsForm}
+                onHide={() => setShowLeaderboardsForm(false)}
+                backdrop='static'
+            />
             <Row className='flex-grow-1'>
                 <GameMap 
                     loaded={loaded}
                     mapImageURL={mapImageURL} 
                     characters={characters} 
                     className='flex-grow-1'
+                    isComplete={isComplete}
                 />    
             </Row>
         </>
