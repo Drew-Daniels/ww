@@ -30,6 +30,7 @@ export default function CustomNavbar(props) {
                                     return (
                                         <Nav.Item key={i}>
                                             <LinkContainer
+                                                id={route.name + '-btn'}
                                                 to={route.name === 'home' ? '/' : route.name}
                                             >   
                                                 <Nav.Link className='d-flex justify-content-center align-items-center'>

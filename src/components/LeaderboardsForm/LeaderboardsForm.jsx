@@ -30,7 +30,7 @@ export default function GameForm(props) {
                 <Form className='leaderboards-form mb-3' onSubmit={onSubmit}>
                     <h2 className='text-center'>
                         You found all the characters in 
-                            <span style={{ color: 'red' }} className='duration'>
+                            <span className='duration'>
                                 {duration} 
                             </span>
                         seconds!
