@@ -1,11 +1,14 @@
 import { Form, Container, Modal, FloatingLabel, Button } from 'react-bootstrap';
 import { IconContext } from 'react-icons';
+import { RiHomeFill as HomeIcon } from 'react-icons/ri';
+import { FaGamepad as GameIcon } from 'react-icons/fa';
+import { MdSportsScore as LeaderboardsIcon } from 'react-icons/md';
 import { IoMdClose as CloseIcon } from 'react-icons/io'
 import './LeaderboardsForm.scss';
 
 export default function GameForm(props) {
 
-    const { duration, show, onHide, onSubmit } = props;
+    const { duration, show, onHide, onSubmit, toHome, toGame, toLeaderboards } = props;
 
     return (
         <Modal
@@ -20,9 +23,22 @@ export default function GameForm(props) {
                 <Modal.Title>                
                     Solid detective work...
                 </Modal.Title>
-                <Button variant='danger' onClick={onHide}>
-                    <IconContext.Provider value={{ size: '2em' }}>
-                        <CloseIcon />
+                <Button className='d-flex align-items-center' variant='danger' onClick={toHome}>
+                    <span>Return Home</span>
+                    <IconContext.Provider value={{ size: '2em'}} >
+                        <HomeIcon className='form-btn-icon'/>
+                    </IconContext.Provider>
+                </Button>
+                <Button className='d-flex align-items-center' variant='danger' onClick={toGame}>
+                    <span>New Game</span>
+                    <IconContext.Provider value={{ size: '2em'}} >
+                        <GameIcon className='form-btn-icon'/>
+                    </IconContext.Provider>
+                </Button>
+                <Button className='d-flex align-items-center' variant='danger' onClick={toLeaderboards}>
+                    <span>View Leaderboards</span>
+                    <IconContext.Provider value={{ size: '2em'}} >
+                        <LeaderboardsIcon className='form-btn-icon'/>
                     </IconContext.Provider>
                 </Button>
             </Modal.Header>

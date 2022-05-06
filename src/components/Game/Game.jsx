@@ -130,8 +130,24 @@ export default function Game(props) {
         setShowLeaderboardsForm(false);
         navigate('/leaderboards');
     }
+    function toHome() {
+        navigate('/');
+    }
+    function toGame() {
+        navigate('/game');
+    }
+    function toLeaderboards() {
+        navigate('/leaderboards');
+    }
 
-    async function onSubmit(e) {
+    async function choicesOnSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
+        const characterName = formProps.characterName;
+    }
+
+    async function leaderboardsOnSubmit(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formProps = Object.fromEntries(formData);
@@ -158,7 +174,10 @@ export default function Game(props) {
                 duration={duration}
                 show={showLeaderboardsForm}
                 onHide={onHide}
-                onSubmit={onSubmit}
+                onSubmit={leaderboardsOnSubmit}
+                toHome={toHome}
+                toGame={toGame}
+                toLeaderboards={toLeaderboards}
                 backdrop='static'
             />
             <Row className='flex-grow-1'>
@@ -168,6 +187,7 @@ export default function Game(props) {
                     characters={characters} 
                     className='flex-grow-1'
                     isComplete={isComplete}
+                    onSubmit={choicesOnSubmit}
                 />    
             </Row>
         </>
