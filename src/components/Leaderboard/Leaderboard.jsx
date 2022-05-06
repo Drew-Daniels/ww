@@ -3,7 +3,7 @@ import './Leaderboard.scss';
 
 export default function Leaderboard(props) {
 
-    const { loaded, mapRecords } = props;
+    const { loaded, mapName, mapRecords } = props;
 
     var placeholders = [];
     for (let i=0; i < mapRecords.length; i++) {
@@ -16,7 +16,7 @@ export default function Leaderboard(props) {
 
     return (
         <Col>
-            <h1 className='text-center'>Robot City</h1>
+            <h1 className='text-center'>{mapName}</h1>
             <ListGroup className='d-flex flex-grow-1' variant='flush'>
                 {!loaded && placeholders }
                 {loaded &&
@@ -33,7 +33,7 @@ export default function Leaderboard(props) {
                                     <Col lg={10}>
                                         <Container className='d-flex'>
                                             <h1>{record.username}</h1>
-                                            <span>{record.duration} seconds</span>
+                                            <span>{record.duration} ms</span>
                                         </Container>
                                     </Col>
                                 </Row>

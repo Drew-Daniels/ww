@@ -26,7 +26,7 @@ export default function Timer(props) {
                 </Col>
                 <Col lg={12} className='d-flex justify-content-center align-items-center'>
                     {loaded &&
-                        <span className='text-center'>{`${duration} seconds`}</span>    
+                        <span className='text-center'>{`${duration} ms`}</span>    
                     }
                 </Col>
             </Row>

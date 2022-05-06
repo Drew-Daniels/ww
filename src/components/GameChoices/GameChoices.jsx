@@ -34,7 +34,7 @@ export default function GameChoices(props) {
     }, []);
 
     return (
-        <Container fluid className='d-flex flex-grow-1 justify-content-around my-2'>
+        <Container fluid className='d-flex flex-grow-1 justify-content-around my-2 map-choice-card-container'>
             <Row>
                 <Col>
                     <Link to='1' className='d-flex flex-grow-1'>

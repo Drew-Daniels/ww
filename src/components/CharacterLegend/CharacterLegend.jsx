@@ -10,8 +10,8 @@ export default function CharacterLegend(props) {
                 {characters.map((character, i) => {
                     const { name, difficulty, imgURL } = character;
                     return (
-                        <ListGroup.Item key={i} className='d-flex flex-grow-1 flex-row'>
-                            <Card className='d-flex flex-grow-1'>
+                        <ListGroup.Item key={i} className='d-flex flex-grow-1 flex-row character-card-container'>
+                            <Card className='d-flex flex-grow-1 character-card'>
                                 <Card.Title className='d-flex justify-content-center'>
                                     {!loaded &&
                                         <Placeholder xs={12}></Placeholder>

@@ -56,10 +56,12 @@ export default function Leaderboards(props) {
         <Container as='main' fluid className='d-flex flex-grow-1'>
             <Row className='d-flex flex-grow-1'>
                 <Leaderboard 
+                    mapName='Robot City'
                     mapRecords={map1Records}
                     loaded={loaded}
                 />
                 <Leaderboard 
+                    mapName='Ultimate Space Battle'
                     mapRecords={map2Records}
                     loaded={loaded}
                 />

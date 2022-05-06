@@ -39,7 +39,7 @@ export default function Game(props) {
     const [characters, setCharacters] = useState([]);
     const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(0);
-    const [isComplete, setIsComplete] = useState(true);
+    const [isComplete, setIsComplete] = useState(false);
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
     const [showLeaderboardsForm, setShowLeaderboardsForm] = useState(false);
@@ -95,7 +95,7 @@ export default function Game(props) {
     useInterval(() => {
         if (isComplete) { return }
         setDuration(duration + 1);
-    }, 1000)
+    }, 100)
 
     function useInterval(cb, delay) {
         const savedCb = useRef();
@@ -163,7 +163,7 @@ export default function Game(props) {
 
     return (
         <>
-            <Row className='d-flex p-2'>
+            <Row className='d-flex'>
                 <StatusBar 
                     loaded={loaded}
                     duration={duration}

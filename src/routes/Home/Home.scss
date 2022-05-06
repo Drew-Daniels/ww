@@ -9,5 +9,54 @@
     width: auto;
 }
 .welcome-message {
-    text-indent: 4em;
+    background-color: rgb(33, 37, 41);
+    color: white;
+    padding: 1rem;
+    border-radius: .25rem;
+}
+.home {
+    background-color: #fd5252;
+}
+.app-icon-bw {
+    height: 4rem;
+    opacity: 1;
+    animation: fade 4s linear infinite;
+}
+.app-icon-bw-delay-1 {
+    animation-delay: 0ms;
+}
+.app-icon-bw-delay-2 {
+    animation-delay: 100ms;
+}
+.app-icon-bw-delay-3 {
+    animation-delay: 200ms;
+}
+.app-icon-bw-delay-4 {
+    animation-delay: 300ms;
+}
+
+@keyframes fade {
+    0%, 100% { opacity: 0}
+    50% { opacity: 1}
+}
+.btn-game-container {
+    display: flex;
+    flex: 1 1 2;
+}
+.btn-game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    margin: auto;
+    width: 100%;
+    padding: 1rem;
+    background-color: rgb(33, 37, 41);
+}
+
+@media (max-width: 480px) {
+    .app-icon-bw {
+        height: 2rem;
+    }
 }
