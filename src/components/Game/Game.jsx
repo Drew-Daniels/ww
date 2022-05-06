@@ -126,10 +126,18 @@ export default function Game(props) {
         }
     }, [isComplete])
 
-    async function handleGameEnd() {
+    function onHide() {
+        setShowLeaderboardsForm(false);
+        navigate('/leaderboards');
+    }
+
+    async function onSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
         const gameData = GameFactory({
             map_id: mapId,
-            username: username,
+            username: formProps.username || '',
             duration: duration,
         });
         saveGame(gameData);
@@ -148,7 +156,8 @@ export default function Game(props) {
             <LeaderboardsForm 
                 duration={duration}
                 show={showLeaderboardsForm}
-                onHide={() => setShowLeaderboardsForm(false)}
+                onHide={onHide}
+                onSubmit={onSubmit}
                 backdrop='static'
             />
             <Row className='flex-grow-1'>

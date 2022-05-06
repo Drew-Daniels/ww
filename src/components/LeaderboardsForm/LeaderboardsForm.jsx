@@ -1,9 +1,11 @@
 import { Form, Container, Modal, FloatingLabel, Button } from 'react-bootstrap';
+import { IconContext } from 'react-icons';
+import { IoMdClose as CloseIcon } from 'react-icons/io'
 import './LeaderboardsForm.scss';
 
 export default function GameForm(props) {
 
-    const { duration, show, onHide } = props;
+    const { duration, show, onHide, onSubmit } = props;
 
     return (
         <Modal
@@ -12,30 +14,37 @@ export default function GameForm(props) {
             id='leaderboards-form'
             show={show}
             onHide={onHide}
+            className='leaderboards-form-container'
         >
-            <Modal.Header>
+            <Modal.Header className='modal-header'>
                 <Modal.Title>                
-                    <h1 className='text-center'>
-                        Congrats! You found all the characters in 
+                    Solid detective work...
+                </Modal.Title>
+                <Button variant='danger' onClick={onHide}>
+                    <IconContext.Provider value={{ size: '2em' }}>
+                        <CloseIcon />
+                    </IconContext.Provider>
+                </Button>
+            </Modal.Header>
+            <Modal.Body className='modal-body'>
+                <Form className='leaderboards-form mb-3' onSubmit={onSubmit}>
+                    <h2 className='text-center'>
+                        You found all the characters in 
                             <span style={{ color: 'red' }} className='duration'>
                                 {duration} 
                             </span>
                         seconds!
-                    </h1>
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form className='leaderboards-form mb-3'>
+                    </h2>
                     <p className='text-center'>If you would like to log your win on the leaderboards, enter your username below:</p>
                     <FloatingLabel
                         controlId='username'
                         label='username'
-                        className='mb-3'
+                        className='mb-3 username-control'
                     >
-                        <Form.Control type='text' placeholder='yourusernamehere'></Form.Control>
+                        <Form.Control name='username' type='text' placeholder='yourusernamehere'></Form.Control>
                     </FloatingLabel>
                     <Container className='d-flex justify-content-center'>
-                        <Button variant='danger mx-auto'>Submit</Button>
+                        <Button type='submit' variant='danger mx-auto'>Submit</Button>
                     </Container>
                 </Form>
             </Modal.Body>
