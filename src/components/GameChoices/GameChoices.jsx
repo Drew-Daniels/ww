@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { ImEnter as PlayIcon } from 'react-icons/im';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import { getImageURL } from '../../helpers/storHelpers';
 import { Link } from "react-router-dom"
@@ -7,8 +6,6 @@ import { Link } from "react-router-dom"
 import './GameChoices.scss';
 
 export default function GameChoices(props) {
-
-    const { characters } = props;
 
     const [loaded, setLoaded] = useState(false);
     const [map1URL, setMap1URL] = useState('');

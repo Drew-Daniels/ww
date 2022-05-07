@@ -28,7 +28,7 @@ const routes = [
 
 function App(props) {
 
-  const { db, getImageURL } = props;
+  const { db } = props;
 
   return (
     <Container fluid className='App d-flex flex-column flex-grow-1 min-vh-100 px-0'>
@@ -36,7 +36,6 @@ function App(props) {
         <Navbar appTitle={appTitle} routes={routes} />
         <Outlet context={{
           db: db,
-          getImageURL: getImageURL,
         }}/>
       </Container>
       <Footer />

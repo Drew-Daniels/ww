@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import CustomCursor from '../CustomCursor/CustomCursor';
 import Marker from '../Marker/Marker';
@@ -8,7 +8,7 @@ import './GameMap.scss';
 
 export default function GameMap(props) {
     const imageRef = useRef();
-    const { loaded, mapImageURL, characters, isComplete } = props;
+    const { loaded, mapImageURL, characters, isComplete, getFormData, setIsValidating } = props;
 
     const [clWidth, setClWidth] = useState(0);
     const [clHeight, setClHeight] = useState(0);
@@ -134,7 +134,7 @@ export default function GameMap(props) {
 
         async function placeChoices() {
             Promise.all([
-                setChoicesX(prevChoicesX => { return mouseX < imageMidpoint ? mouseX - 40: mouseX - 350 }),
+                setChoicesX(prevChoicesX => { return mouseX < imageMidpoint ? mouseX - 40: mouseX - 450 }),
                 setChoicesY(prevChoicesY => { return mouseY - 40 }),
             ])
         }
@@ -148,13 +148,19 @@ export default function GameMap(props) {
      */
     function handleChoiceSubmit(e) {
         e.preventDefault();
-        e.stopPropagation();
-        console.log(characters);
-        console.log('markerX: ' + markerX)
-        console.log('markerY:' + markerY);
+        const formData = getFormData(e);
+        const submittedCharacter = formData.character;
         const availableCharacters = getAvailableCharacters(characters);
-        console.log(availableCharacters);
+        var matchedCharacter;
+        for (let i=0; i < availableCharacters.length; i++) {
+            const character = availableCharacters[i];
+            if (character.name === submittedCharacter) {
+                matchedCharacter = character;
+            };
+        }
+        console.log(matchedCharacter);
         setMarked(prevMarked => false);
+        setIsValidating(prevValidating => true);
         /**
          * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
          * @param {array of Characters} characters 
@@ -202,9 +208,6 @@ export default function GameMap(props) {
                 sourceX >= targetXMin && sourceX <= targetXMax &&
                 sourceY >= targetYMin && sourceY <= targetYMax
             )
-        }
-        function isCorrectCharacter(character, inboundsCharacters) {
-            // fill in later
         }
     }
 

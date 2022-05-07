@@ -1,32 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Container, Placeholder, Spinner, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Container, Button } from 'react-bootstrap';
 import { IconContext } from 'react-icons';
 import { FaGamepad as GameIcon } from 'react-icons/fa';
-import { useOutletContext } from 'react-router-dom';
 import AppIconBW from '../../icons/app-icon-bw.svg';
 import './Home.scss';
 
 export default function Home(props) {
 
-    const { getImageURL } = useOutletContext();
-    const [portraitURL, setPortraitURL] = useState('')
-    const [loaded, setLoaded] = useState(false);
+    const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     retreivePortrait();
-        
-    //     //FUNCTIONS
-    //     async function retreivePortrait() {
-    //         try {
-    //             const url = await getImageURL('images','waldo.gif');
-    //             setPortraitURL(url);
-    //             setLoaded(true);
-    //         }
-    //         catch(err) {
-    //             console.error(err)
-    //         }
-    //     }
-    // }, [getImageURL])
+    function toGame() {
+        navigate('/game');
+    }
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0 home'>
@@ -49,7 +34,7 @@ export default function Home(props) {
                             <img src={AppIconBW} alt='Black and White Magnifying Glass' className='app-icon-bw app-icon-bw-delay-3' />    
                         </Container>
                         <Container className='btn-game-container'>
-                            <Button variant='danger' className='btn-game'>
+                            <Button variant='danger' className='btn-game' onClick={toGame}>
                                 <span>Start</span>
                                 <IconContext.Provider value={{ size: '2rem', color: '#fd5252'}}>
                                     <GameIcon />

@@ -12,31 +12,13 @@ import {
   Route,
 } from 'react-router-dom';
 import { db } from './firebase';
-import { getImageURL } from './helpers/storHelpers';
-
-class Map {
-  constructor(id, name, difficulty, characters) {
-    this.id = id;
-    this.name = name;
-    this.difficulty = difficulty;
-    this.characters = characters;
-  }
-}
-
-class Character {
-  constructor(id, name, difficulty, coordinates) {
-    this.id = id;
-    this.name = name;
-    this.difficulty = difficulty;
-  }
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<App getImageURL={getImageURL} />}>
+        <Route path='/' element={<App />}>
           <Route index element={<Home />} />
           <Route path='game' element={<GameBase />} >
             <Route index element={<GameChoices />} />

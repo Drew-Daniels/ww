@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import { query, where, getDocs, collection } from 'firebase/firestore';
 
 import './Game.scss';
+import DBValidationModal from "../DBValidationModal/DBValidationModal";
 
 class Character {
     constructor(name, difficulty, x_min, x_max, y_min, y_max, imgURL) {
@@ -37,13 +38,12 @@ export default function Game(props) {
     const [mapId, setMapId] = useState(parseInt(mapIdParam));
     const [mapName, setMapName] = useState('');
     const [characters, setCharacters] = useState([]);
-    const [username, setUsername] = useState('');
     const [duration, setDuration] = useState(0);
     const [isComplete, setIsComplete] = useState(false);
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
+    const [isValidating, setIsValidating] = useState(false);
     const [showLeaderboardsForm, setShowLeaderboardsForm] = useState(false);
-    const [gameFormDisplayed, setGameFormDisplayed] = useState(false);
 
     // Initial setup
     useEffect(() => {
@@ -117,14 +117,15 @@ export default function Game(props) {
 
     useEffect(() => {
         if (isComplete) {
-            // stop timer
-            // show game form
-            // save game
-            // show a message informing that game has been saved
-            // redirect to leaderboards
             setShowLeaderboardsForm(true);
         }
     }, [isComplete])
+
+    useEffect(() => {
+        if (isValidating) {
+            setIsValidating(true);
+        }
+    }, [isValidating])
 
     function onHide() {
         setShowLeaderboardsForm(false);
@@ -140,18 +141,13 @@ export default function Game(props) {
         navigate('/leaderboards');
     }
 
-    async function choicesOnSubmit(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-        const characterName = formProps.characterName;
-    }
-
+    /**
+     * Saves the game to Firestore with the username provided from the form - defaults to "Anonymous" if no name provided.
+     */
     async function leaderboardsOnSubmit(e) {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const formProps = Object.fromEntries(formData);
-        const uname = formProps.username;
+        const formData = getFormData(e);
+        const uname = formData.username;
         const gameData = GameFactory({
             map_id: mapId,
             username: uname ? uname : 'Anonymous',
@@ -159,6 +155,12 @@ export default function Game(props) {
         });
         saveGame(gameData);
         navigate('/leaderboards');
+    }
+
+    function getFormData(e) {
+        const formData = new FormData(e.target);
+        const formProps = Object.fromEntries(formData);
+        return formProps;
     }
 
     return (
@@ -180,6 +182,11 @@ export default function Game(props) {
                 toLeaderboards={toLeaderboards}
                 backdrop='static'
             />
+            <DBValidationModal
+                show={isValidating}
+                onHide={onHide}
+                backdrop='static'
+            />
             <Row className='flex-grow-1'>
                 <GameMap 
                     loaded={loaded}
@@ -187,7 +194,8 @@ export default function Game(props) {
                     characters={characters} 
                     className='flex-grow-1'
                     isComplete={isComplete}
-                    onSubmit={choicesOnSubmit}
+                    getFormData={getFormData}
+                    setIsValidating={setIsValidating}
                 />    
             </Row>
         </>
