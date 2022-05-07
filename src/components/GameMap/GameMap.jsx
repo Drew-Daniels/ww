@@ -214,7 +214,7 @@ export default function GameMap(props) {
     return (
         <Container as='main' fluid id='game-map' className='d-flex flex-grow-1 justify-content-center align-items-center px-0' onClick={handleClick} onMouseMove={handleMouseMove}>
             {!loaded &&
-                <Spinner animation="border" variant="danger" />
+                <Spinner animation="border" variant='danger' />
             }
             {loaded &&
                     <>

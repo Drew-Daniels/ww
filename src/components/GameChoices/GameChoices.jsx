@@ -32,8 +32,8 @@ export default function GameChoices(props) {
 
     return (
         <Container fluid className='d-flex flex-grow-1 justify-content-around my-2 map-choice-card-container'>
-            <Row>
-                <Col>
+            <Row className='d-flex flex-grow-1'>
+                <Col className='d-flex flex-grow-1'>
                     <Link to='1' className='d-flex flex-grow-1'>
                         <Card className='d-flex flex-grow-1 map-choice-card'>
                             <Card.Header className='text-center'>
@@ -56,7 +56,7 @@ export default function GameChoices(props) {
                         </Card>
                     </Link>
                 </Col>
-                <Col>
+                <Col className='d-flex flex-grow-1'>
                     <Link to='2' className='d-flex flex-grow-1' >
                         <Card className='d-flex flex-grow-1 map-choice-card'>
                             <Card.Header className='text-center'>
@@ -80,8 +80,6 @@ export default function GameChoices(props) {
                     </Link>
                 </Col>
             </Row>
-
-
         </Container>
     )
 }

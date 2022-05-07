@@ -53,8 +53,8 @@ export default function Leaderboards(props) {
 
 
     return (
-        <Container as='main' fluid className='d-flex flex-grow-1'>
-            <Row className='d-flex flex-grow-1'>
+        <Container as='main' fluid className='d-flex flex-grow-1 leaderboards-container'>
+            <Row className='d-flex flex-grow-1 leaderboards'>
                 <Leaderboard 
                     mapName='Robot City'
                     mapRecords={map1Records}
