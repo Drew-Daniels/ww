@@ -21,8 +21,10 @@ export default function Leaderboard(props) {
 
     return (
         <Col className='leaderboard'>
-            <h1 className='text-center map-header'>{mapName}</h1>
-            <ListGroup className='d-flex flex-grow-1' variant='flush'>
+            <div className='map-header-container'>
+                <h1 className='text-center map-header'>{mapName}</h1>
+            </div>
+            <ListGroup className='d-flex flex-grow-1 records' variant='flush'>
                 {!loaded && placeholders }
                 {loaded &&
                     mapRecords.map((record, i) => {

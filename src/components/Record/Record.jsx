@@ -31,15 +31,21 @@ export default function Record(props) {
     return (
         <ListGroup.Item as='li' className="d-flex record">
             <Row className='d-flex flex-grow-1'>
-                <Col lg={2} className="d-flex justify-content-end align-items-center">
+                <Col xs={2} sm={2} lg={2} className="d-flex justify-content-end align-items-center">
                     <IconContext.Provider value={{ color: color, size: size }}>
                         <TrophyIcon />
                     </IconContext.Provider>
                 </Col>
-                <Col lg={10}>
+                <Col xs={10} sm={10} lg={10}>
                     <Container className='d-flex justify-content-around align-items-center'>
-                        <h1>{record.username}</h1>
-                        <span>{record.duration} ms</span>
+                        <Row className='d-flex flex-grow-1'>
+                            <Col className='d-flex align-items-center'>
+                                <h2>{record.username}</h2>    
+                            </Col>
+                            <Col className='d-flex justify-content-end align-items-center'>
+                                <span>{record.duration} ms</span>
+                            </Col>
+                        </Row>
                     </Container>
                 </Col>
             </Row>
