@@ -42,7 +42,7 @@ export default function Game(props) {
     const [isComplete, setIsComplete] = useState(false);
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
-    const [isValidating, setIsValidating] = useState(false);
+    const [isValidating, setShowValidationForm] = useState(false);
     const [showLeaderboardsForm, setShowLeaderboardsForm] = useState(false);
 
     // Initial setup
@@ -55,7 +55,7 @@ export default function Game(props) {
                 loadMapData(),
                 loadCharacters(),
             ]);
-            setLoaded(true);
+            // setLoaded(true);
         };
 
         async function loadMapData() {
@@ -93,7 +93,7 @@ export default function Game(props) {
 
     // timer logic - https://overreacted.io/making-setinterval-declarative-with-react-hooks/
     useInterval(() => {
-        if (isComplete) { return }
+        if (isComplete || !loaded) { return }
         setDuration(duration + 1);
     }, 100)
 
@@ -123,11 +123,15 @@ export default function Game(props) {
 
     useEffect(() => {
         if (isValidating) {
-            setIsValidating(true);
+            setShowValidationForm(true);
         }
     }, [isValidating])
 
-    function onHide() {
+    function onHideValidationForm() {
+        setShowValidationForm(false);
+    }
+
+    function onHideLeaderboardsForm() {
         setShowLeaderboardsForm(false);
         navigate('/leaderboards');
     }
@@ -175,7 +179,7 @@ export default function Game(props) {
             <LeaderboardsForm 
                 duration={duration}
                 show={showLeaderboardsForm}
-                onHide={onHide}
+                onHide={onHideLeaderboardsForm}
                 onSubmit={leaderboardsOnSubmit}
                 toHome={toHome}
                 toGame={toGame}
@@ -184,7 +188,7 @@ export default function Game(props) {
             />
             <DBValidationModal
                 show={isValidating}
-                onHide={onHide}
+                onHide={onHideValidationForm}
                 backdrop='static'
             />
             <Row className='flex-grow-1'>
@@ -195,7 +199,7 @@ export default function Game(props) {
                     className='flex-grow-1'
                     isComplete={isComplete}
                     getFormData={getFormData}
-                    setIsValidating={setIsValidating}
+                    setShowValidationForm={setShowValidationForm}
                 />    
             </Row>
         </>

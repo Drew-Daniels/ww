@@ -8,7 +8,7 @@ import './GameMap.scss';
 
 export default function GameMap(props) {
     const imageRef = useRef();
-    const { loaded, mapImageURL, characters, isComplete, getFormData, setIsValidating } = props;
+    const { loaded, mapImageURL, characters, isComplete, getFormData, setShowValidationForm } = props;
 
     const [clWidth, setClWidth] = useState(0);
     const [clHeight, setClHeight] = useState(0);
@@ -160,7 +160,7 @@ export default function GameMap(props) {
         }
         console.log(matchedCharacter);
         setMarked(prevMarked => false);
-        setIsValidating(prevValidating => true);
+        setShowValidationForm(true);
         /**
          * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
          * @param {array of Characters} characters 

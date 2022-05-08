@@ -12,26 +12,27 @@ export default function CharacterLegend(props) {
                     return (
                         <ListGroup.Item key={i} className='d-flex flex-grow-1 flex-row character-card-container'>
                             <Card className='d-flex flex-grow-1 character-card'>
-                                <Card.Title className='d-flex justify-content-center'>
-                                    {!loaded &&
-                                        <Placeholder xs={12}></Placeholder>
-                                    }
-                                    {loaded &&
-                                        <>
-                                            <span>{name}</span>
-                                            <Badge pill>{difficulty}</Badge>
-                                        </>
-                                    }
-                                </Card.Title>
-                                <div className='d-flex justify-content-center'>
-                                    {!loaded &&
-                                        <Spinner animation="grow" variant="danger" />
-                                    }
-                                    {loaded &&
-                                        <Card.Img variant='top' src={imgURL} className='character-image' />
-                                    }
-                                </div>
+                                {!loaded &&
+                                    <Placeholder as={Card.Title} animation='glow'>
+                                        <Placeholder xs={9} />
+                                        {" "}
+                                        <Placeholder xs={2}/>
+                                    </Placeholder>
+                                }
+                                {loaded &&
+                                    <Card.Title className='d-flex justify-content-center'>
+                                        <span>{name}</span>
+                                    </Card.Title>
+                                }
                                 <Card.Body>
+                                    <div className='d-flex justify-content-center'>
+                                        {!loaded &&
+                                            <Spinner animation="grow" variant="danger" />
+                                        }
+                                        {loaded &&
+                                            <Card.Img variant='top' src={imgURL} className='character-image' />
+                                        }
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </ListGroup.Item>
