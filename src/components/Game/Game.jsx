@@ -186,11 +186,11 @@ export default function Game(props) {
                 toLeaderboards={toLeaderboards}
                 backdrop='static'
             />
-            <DBValidationModal
+            {/* <DBValidationModal
                 show={isValidating}
                 onHide={onHideValidationForm}
                 backdrop='static'
-            />
+            /> */}
             <Row className='flex-grow-1'>
                 <GameMap 
                     loaded={loaded}

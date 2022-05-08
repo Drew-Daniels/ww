@@ -47,96 +47,82 @@ export default function GameMap(props) {
     /**
      * @param {event} e 
      */
-     async function handleMouseMove(e) {
+    function handleMouseMove(e) {
         if (!loaded) return;
-        await setBoundaries();
-        await setMousePos();
-        await setMouseImgPos();
-        await setRelPos();
-        await setAbsPos();
+        setImSize();
+        handleResize();
+        setBoundaries();
+        setMousePos();
+        setMouseImgPos();
+        setRelPos();
+        setAbsPos();
 
+        /**
+         * TODO: Move this to UseEffect rule to set only on page load.
+         */
+        function setImSize() {
+            setImHeight(prevImHeight => imageRef.current.naturalHeight);
+            setImWidth(prevImWidth => imageRef.current.naturalWidth);
+        }
+        function handleResize() {
+            setClHeight(prevClHeight => imageRef.current.clientHeight );
+            setClWidth(prevClWidth => imageRef.current.clientWidth );
+            setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2);
+        }
         /**
          * track left and top boundaries of the image
          */
-        async function setBoundaries() {
+        function setBoundaries() {
             const bounds = imageRef.current.getBoundingClientRect();
-            Promise.all([
-                setLeftBoundary(prevLeftBounds => bounds.left),
-                setTopBoundary(prevTopBounds => bounds.top),
-            ])
+            setLeftBoundary(prevLeftBounds => bounds.left);
+            setTopBoundary(prevTopBounds => bounds.top);
         }
         /**
          * track absolute mouse position on html page
          */
-        async function setMousePos() {
-            Promise.all([
-                setMouseX(prevMouseX => e.pageX),
-                setMouseY(prevMouseY => e.pageY),                
-            ])
-        }
+        function setMousePos() {
+            setMouseX(prevMouseX => e.pageX);
+            setMouseY(prevMouseY => e.pageY);
+        }    
         /**
          * center mouse image over the exact mouse position
          */
-        async function setMouseImgPos() {
-            Promise.all([
-                setMouseImgX(prevMouseImgX => mouseX - 50),
-                setMouseImgY(prevMouseImgY => mouseY - 50),
-            ])
+        function setMouseImgPos() {
+            setMouseImgX(prevMouseImgX => mouseX - 50);
+            setMouseImgY(prevMouseImgY => mouseY - 50);
         }
         /**
          * track mouse coordinates relative to map image boundaries and scrolled distance
          */
-        async function setRelPos() {
-            Promise.all([
-                setRelX(prevRelX => mouseX - leftBoundary - window.scrollX),
-                setRelY(prevRelY => mouseY - topBoundary - window.scrollY),
-            ])
+        function setRelPos() {
+            setRelX(prevRelX => mouseX - leftBoundary - window.scrollX);
+            setRelY(prevRelY => mouseY - topBoundary - window.scrollY);
         }
         /**
          * track absolute mouse coordinates relative to original image dimensions
          */
-        async function setAbsPos() {
-            Promise.all([
-                setAbsX(prevAbsX => relX/clWidth * imWidth),
-                setAbsY(prevAbsY => relY/clHeight * imHeight),
-            ])
+        function setAbsPos() {
+            setAbsX(prevAbsX => relX/clWidth * imWidth);
+            setAbsY(prevAbsY => relY/clHeight * imHeight);
         }
     };
 
-    async function handleClick(e) {
-        await setImSize();
-        await handleResize();
-        await placeMarker();
+    function handleClick(e) {
+
+        placeMarker();
         placeChoices();
 
-        async function setImSize() {
-            Promise.all([
-                setImHeight(prevImHeight => imageRef.current.naturalHeight ),
-                setImWidth(prevImWidth => imageRef.current.naturalWidth ),
-            ]);
-        }
-        async function handleResize() {
-            Promise.all([
-                setClHeight(prevClHeight => imageRef.current.clientHeight ),
-                setClWidth(prevClWidth => imageRef.current.clientWidth ),
-                setImageMidpoint(prevImageMidPoint => imageRef.current.clientWidth / 2),
-            ]);
-        }
-        async function placeMarker() {
-            Promise.all([
-                setMarkerX(prevMarkerX => absX ),
-                setMarkerY(prevMarkerY => absY ),
-                setMarkerImgX(prevMarkerImgX => mouseX - 40),
-                setMarkerImgY(prevMarkerImgY => mouseY - 40),
-                setMarked(true),
-            ])
+        function placeMarker() {
+            setMarkerX(prevMarkerX => absX );
+            setMarkerY(prevMarkerY => absY );
+            setMarkerImgX(prevMarkerImgX => mouseX - 40);
+            setMarkerImgY(prevMarkerImgY => mouseY - 40);
+            setMarked(true);
         }
 
-        async function placeChoices() {
-            Promise.all([
-                setChoicesX(prevChoicesX => { return mouseX < imageMidpoint ? mouseX - 40: mouseX - 450 }),
-                setChoicesY(prevChoicesY => { return mouseY - 40 }),
-            ])
+        function placeChoices() {
+            setChoicesX(prevChoicesX => { return mouseX < imageMidpoint ? mouseX - 40: mouseX - 450 });
+            setChoicesY(prevChoicesY => { return mouseY - 40 });
         }
     };
 
@@ -168,7 +154,7 @@ export default function GameMap(props) {
          */
         function getAvailableCharacters(characters) {
             const unfoundCharacters = getUnfoundCharacters(characters)
-            const availableCharacters = getInboundsCharacters(unfoundCharacters);
+            const availableCharacters = getInboundsCharacters(markerX, markerY, unfoundCharacters);
             return availableCharacters;
         }
         /**
@@ -185,10 +171,12 @@ export default function GameMap(props) {
          * @param {array of Characters} characters 
          * @returns filtered array of characters
          */
-        function getInboundsCharacters(characters) {
+        function getInboundsCharacters(sourceX, sourceY, characters) {
             const inboundsCharacters = characters.filter(character => {
                 const { x_min, x_max, y_min, y_max } = character;
-                return isWithinBounds(markerX, markerY, x_min, x_max, y_min, y_max);
+                console.log("SourceX: " + sourceX);
+                console.log("SourceY: " + sourceY);
+                return isWithinBounds(sourceX, sourceY, x_min, x_max, y_min, y_max);
             });
             return inboundsCharacters;
         }
