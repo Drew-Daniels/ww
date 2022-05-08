@@ -55,7 +55,7 @@ export default function Game(props) {
                 loadMapData(),
                 loadCharacters(),
             ]);
-            // setLoaded(true);
+            setLoaded(true);
         };
 
         async function loadMapData() {

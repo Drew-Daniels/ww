@@ -1,14 +1,17 @@
-import { Container, ListGroup, Card, Badge, Placeholder, Spinner } from 'react-bootstrap';
+import { Container, ListGroup, Card, Placeholder, Spinner } from 'react-bootstrap';
+import { IconContext } from 'react-icons';
+import { AiOutlineCheck as FoundIcon } from 'react-icons/ai';
+import { AiOutlineQuestion as NotFoundIcon } from 'react-icons/ai';
 import './CharacterLegend.scss';
 
 export default function CharacterLegend(props) {
     const { loaded, characters } = props;
 
     return (
-        <Container fluid className='d-flex flex-grow-1 justify-content-center align-items-center'>
+        <Container fluid className='d-flex flex-grow-1 justify-content-center align-items-center character-legend'>
             <ListGroup className='d-flex flex-grow-1 flex-row'>
                 {characters.map((character, i) => {
-                    const { name, difficulty, imgURL } = character;
+                    const { name, difficulty, imgURL, isFound } = character;
                     return (
                         <ListGroup.Item key={i} className='d-flex flex-grow-1 flex-row character-card-container'>
                             <Card className='d-flex flex-grow-1 character-card'>
@@ -20,8 +23,18 @@ export default function CharacterLegend(props) {
                                     </Placeholder>
                                 }
                                 {loaded &&
-                                    <Card.Title className='d-flex justify-content-center'>
-                                        <span>{name}</span>
+                                    <Card.Title className='d-flex justify-content-center align-items-center'>
+                                        <span className='character-name'>{name}</span>
+                                            {isFound && 
+                                                <IconContext.Provider value={{ color: 'green' }}>
+                                                    <FoundIcon />
+                                                </IconContext.Provider>
+                                            }
+                                            {!isFound && 
+                                                <IconContext.Provider value={{ color: '#fd5252'}}>
+                                                    <NotFoundIcon />
+                                                </IconContext.Provider>
+                                            }
                                     </Card.Title>
                                 }
                                 <Card.Body>
