@@ -15,7 +15,7 @@ export default function Choices(props) {
                 {characters.map((character, i) => {
                     if (character.isFound) { return }
                     return (
-                        <ListGroup.Item as='button' key={i} action variant='danger' onClick={() => handleCharacterSelect(character)}>
+                        <ListGroup.Item as='button' key={i} action className='btn-base btn-choice' onClick={() => handleCharacterSelect(character)}>
                             {character.name}
                         </ListGroup.Item>
                     );
