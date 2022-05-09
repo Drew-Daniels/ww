@@ -1,9 +1,8 @@
-import { Form, Container, Modal, FloatingLabel, Button } from 'react-bootstrap';
+import { Form, Container, Row, Col, Modal, FloatingLabel, Button } from 'react-bootstrap';
 import { IconContext } from 'react-icons';
 import { RiHomeFill as HomeIcon } from 'react-icons/ri';
 import { FaGamepad as GameIcon } from 'react-icons/fa';
 import { MdSportsScore as LeaderboardsIcon } from 'react-icons/md';
-import { IoMdClose as CloseIcon } from 'react-icons/io'
 import './LeaderboardsForm.scss';
 
 export default function GameForm(props) {
@@ -20,27 +19,35 @@ export default function GameForm(props) {
             className='leaderboards-form-container'
         >
             <Modal.Header className='modal-header'>
-                <Modal.Title>                
-                    Solid detective work...
-                </Modal.Title>
-                <Button className='d-flex align-items-center' variant='danger' onClick={toHome}>
-                    <span>Return Home</span>
-                    <IconContext.Provider value={{ size: '2em'}} >
-                        <HomeIcon className='form-btn-icon'/>
-                    </IconContext.Provider>
-                </Button>
-                <Button className='d-flex align-items-center' variant='danger' onClick={toGame}>
-                    <span>New Game</span>
-                    <IconContext.Provider value={{ size: '2em'}} >
-                        <GameIcon className='form-btn-icon'/>
-                    </IconContext.Provider>
-                </Button>
-                <Button className='d-flex align-items-center' variant='danger' onClick={toLeaderboards}>
-                    <span>View Leaderboards</span>
-                    <IconContext.Provider value={{ size: '2em'}} >
-                        <LeaderboardsIcon className='form-btn-icon'/>
-                    </IconContext.Provider>
-                </Button>
+                <Row>
+                    <Col sm={12}>
+                        <Modal.Title>                
+                            Solid detective work...
+                        </Modal.Title>
+                    </Col>
+                    <Col sm={12} className='d-flex justify-content-around form-btns'>
+                        <Button className='d-flex align-items-center form-btn' variant='danger' onClick={toHome}>
+                            <span>Return Home</span>
+                            <IconContext.Provider value={{ size: '2em'}} >
+                                <HomeIcon className='form-btn-icon'/>
+                            </IconContext.Provider>
+                        </Button>
+                        <Button className='d-flex align-items-center form-btn' variant='danger' onClick={toGame}>
+                            <span>New Game</span>
+                            <IconContext.Provider value={{ size: '2em'}} >
+                                <GameIcon className='form-btn-icon'/>
+                            </IconContext.Provider>
+                        </Button>
+                        <Button className='d-flex align-items-center form-btn' variant='danger' onClick={toLeaderboards}>
+                            <span>View Leaderboards</span>
+                            <IconContext.Provider value={{ size: '2em'}} >
+                                <LeaderboardsIcon className='form-btn-icon'/>
+                            </IconContext.Provider>
+                        </Button>
+                    </Col>
+                </Row>
+
+
             </Modal.Header>
             <Modal.Body className='modal-body'>
                 <Form className='leaderboards-form mb-3' onSubmit={onSubmit}>

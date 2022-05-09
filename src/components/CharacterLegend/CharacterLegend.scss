@@ -15,3 +15,9 @@
     height: 3rem;
     width: auto;
 }
+
+@media screen and (max-width: 600px) {
+    .character-image {
+        height: 2rem;
+    }
+}

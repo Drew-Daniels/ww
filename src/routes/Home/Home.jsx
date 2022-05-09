@@ -15,8 +15,8 @@ export default function Home(props) {
 
     return (
         <Container as='main' fluid className='d-flex flex-column flex-grow-1 justify-content-center align-items-center px-0 home'>
-            <Container fluid className='d-flex flex-column flex-grow-1 justify-content-between'>
-                <Container className='d-flex flex-grow-1'>
+            <Container fluid className='d-flex flex-column flex-grow-1 justify-content-between px-0'>
+                <Container className='d-flex flex-grow-1 px-0'>
                     <Container className='d-flex flex-column flex-grow-1 justify-content-around align-items-center mag-glass-container'>
                         <img src={AppIconBW} alt='Black and White Magnifying Glass' className='app-icon-bw app-icon-bw-delay-1' />
                         <img src={AppIconBW} alt='Black and White Magnifying Glass' className='app-icon-bw app-icon-bw-delay-2' />
