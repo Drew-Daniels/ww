@@ -1,30 +1,31 @@
-import { IconContext } from 'react-icons';
-import { FcAcceptDatabase as ValidateIcon } from 'react-icons/fc';
-import { Form, Button } from 'react-bootstrap';
+import { Container, ListGroup } from 'react-bootstrap';
+import ValidationMessageValidating from '../ValidationMessageValidating/ValidationMessageValidating';
+import ValidationMessageInvalid from '../ValidationMessageInvalid/ValidationMessageInvalid';
+import ValidationMessageValid from '../ValidationMessageValid/ValidationMessageValid';
 import './Choices.scss';
 
 export default function Choices(props) {
 
-    const { x, y, characters, handleChoiceSubmit } = props;
+    const { x, y, characters, handleCharacterSelect, isValidating, isValid, validated } = props;
 
     return (
-        <Form className='choices' style={{ left: `${x + 128}px`, top: `${y}px`}} onSubmit={handleChoiceSubmit} onClick={e => e.stopPropagation()} >
+        <div style={{ left: `${x + 128}px`, top: `${y}px`}} className='d-flex flex-column choices' onClick={e => e.stopPropagation()}>
             <h3 className='choice-header'>Who'd you find?</h3>
-            {characters.map((character, i) => {
-                if (character.isFound) { return }
-                return (
-                    <Form.Check key={i} type='radio' id={character.name}>
-                        <Form.Check.Input type='radio' name='character' value={character.name} />
-                        <Form.Check.Label className='character-choice-label'>{character.name}</Form.Check.Label>
-                    </Form.Check>
-                )
-            })}
-            <Button type='submit' variant='danger' className='d-flex justify-content-center align-items-center mt-2'>
-                <span style={{ marginRight: '.25rem' }}>Check DB</span>
-                <IconContext.Provider value={{ size: '2rem'}}>
-                    <ValidateIcon />
-                </IconContext.Provider>
-            </Button>
-        </Form>
+            <ListGroup>
+                {characters.map((character, i) => {
+                    if (character.isFound) { return }
+                    return (
+                        <ListGroup.Item as='button' key={i} action variant='danger' onClick={() => handleCharacterSelect(character)}>
+                            {character.name}
+                        </ListGroup.Item>
+                    );
+                })}
+            </ListGroup>
+            <Container className='d-flex justify-content-around align-items-center mt-2'>
+                {isValidating && <ValidationMessageValidating />}
+                {validated && (isValid ? <ValidationMessageValid /> : <ValidationMessageInvalid />)}
+            </Container>
+        </div>
+
     )
 }

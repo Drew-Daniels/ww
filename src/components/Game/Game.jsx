@@ -10,7 +10,6 @@ import { useState, useEffect, useRef } from "react";
 import { query, where, getDocs, collection } from 'firebase/firestore';
 
 import './Game.scss';
-import DBValidationModal from "../DBValidationModal/DBValidationModal";
 
 class Character {
     constructor(name, difficulty, x_min, x_max, y_min, y_max, imgURL) {
@@ -42,7 +41,6 @@ export default function Game(props) {
     const [isComplete, setIsComplete] = useState(false);
     const [mapImageURL, setMapImageURL] = useState('');
     const [loaded, setLoaded] = useState(false);
-    const [isValidating, setShowValidationForm] = useState(false);
     const [showLeaderboardsForm, setShowLeaderboardsForm] = useState(false);
 
     // Initial setup
@@ -93,8 +91,9 @@ export default function Game(props) {
 
     // timer logic - https://overreacted.io/making-setinterval-declarative-with-react-hooks/
     useInterval(() => {
-        if (isComplete || !loaded) { return }
-        setDuration(duration + 1);
+        if (!isComplete && loaded) {
+            setDuration(duration + 1);
+        }
     }, 100)
 
     function useInterval(cb, delay) {
@@ -117,19 +116,12 @@ export default function Game(props) {
 
     useEffect(() => {
         if (isComplete) {
+            console.log(isComplete)
             setShowLeaderboardsForm(true);
         }
     }, [isComplete])
 
-    useEffect(() => {
-        if (isValidating) {
-            setShowValidationForm(true);
-        }
-    }, [isValidating])
 
-    function onHideValidationForm() {
-        setShowValidationForm(false);
-    }
 
     function onHideLeaderboardsForm() {
         setShowLeaderboardsForm(false);
@@ -186,20 +178,16 @@ export default function Game(props) {
                 toLeaderboards={toLeaderboards}
                 backdrop='static'
             />
-            {/* <DBValidationModal
-                show={isValidating}
-                onHide={onHideValidationForm}
-                backdrop='static'
-            /> */}
             <Row className='flex-grow-1'>
                 <GameMap 
                     loaded={loaded}
                     mapImageURL={mapImageURL} 
                     characters={characters} 
+                    setCharacters={setCharacters}
                     className='flex-grow-1'
                     isComplete={isComplete}
+                    setIsComplete={setIsComplete}
                     getFormData={getFormData}
-                    setShowValidationForm={setShowValidationForm}
                 />    
             </Row>
         </>

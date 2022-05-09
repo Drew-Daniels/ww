@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Container, Spinner } from 'react-bootstrap';
 import CustomCursor from '../CustomCursor/CustomCursor';
 import Marker from '../Marker/Marker';
@@ -8,7 +8,12 @@ import './GameMap.scss';
 
 export default function GameMap(props) {
     const imageRef = useRef();
-    const { loaded, mapImageURL, characters, isComplete, getFormData, setShowValidationForm } = props;
+    const { loaded, mapImageURL, characters, setCharacters, isComplete, setIsComplete } = props;
+
+    const [selectedCharacter, setSelectedCharacter] = useState(null);
+    const [isValidating, setIsValidating] = useState(false);
+    const [validated, setValidated] = useState(false);
+    const [isValid, setIsValid] = useState(false);
 
     const [clWidth, setClWidth] = useState(0);
     const [clHeight, setClHeight] = useState(0);
@@ -43,6 +48,98 @@ export default function GameMap(props) {
     // absX/Y will track absolute pixel coordinates relative to original image size
     const [absX, setAbsX] = useState(0);
     const [absY, setAbsY] = useState(0);
+
+    // Monitor for changes in selectedCharacter here
+    /**
+     * 1. Get the list of nearby and unfound characters
+     * 2. 
+     */
+    useEffect(() => {
+        if (selectedCharacter == null) { return }
+        const availableCharacters = getAvailableCharacters(characters);
+        var matchedCharacter;
+        for (let i=0; i < availableCharacters.length; i++) {
+            const character = availableCharacters[i];
+            if (character.name === selectedCharacter.name) {
+                matchedCharacter = character;
+            };
+        }
+        console.log(selectedCharacter);
+        setIsValidating(prevIsValidating => false);
+        setValidated(prevValidated => true);
+        setIsValid(prevIsValid => matchedCharacter ? true : false);
+        // update characters state
+        if (matchedCharacter) {
+            const ci = characters.findIndex(ch => ch.name === matchedCharacter.name);
+            setCharacters(prevCharacters => prevCharacters.map((ch, i) => {
+                if (i === ci) {
+                    ch.isFound = true;
+                    return ch;
+                } else {
+                    return ch;
+                }
+            }))
+        }
+        setTimeout(() => {
+            setMarked(prevMarked => false);
+        }, 5000)
+        /**
+         * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
+         * @param {array of Characters} characters 
+         * @returns filtered array of characters
+         */
+        function getAvailableCharacters(characters) {
+            const unfoundCharacters = getUnfoundCharacters(characters)
+            const availableCharacters = getInboundsCharacters(markerX, markerY, unfoundCharacters);
+            return availableCharacters;
+        }
+        /**
+         * Retrieves all the characters in state that have not been found
+         * @param {array of Characters} characters 
+         * @returns filtered array of Characters
+         */
+        function getUnfoundCharacters(characters) {
+            const unfoundCharacters = characters.filter(character => !character.isFound)
+            return unfoundCharacters;
+        }
+        /**
+         * Retrieves all the characters in state that have boundaries encompassing the marked coordinate by the user.
+         * @param {array of Characters} characters 
+         * @returns filtered array of characters
+         */
+        function getInboundsCharacters(sourceX, sourceY, characters) {
+            const inboundsCharacters = characters.filter(character => {
+                const { x_min, x_max, y_min, y_max } = character;
+                return isWithinBounds(sourceX, sourceY, x_min, x_max, y_min, y_max);
+            });
+            return inboundsCharacters;
+        }
+        /**
+         * Returns a boolean that denotes whether or not a given point provided (coordinates of [sourceX, sourceY]) fall within the
+         * target boundaries of targetXMin, targetXMax, targetYMin, and targetYMax. 
+         * @param {integer} sourceX 
+         * @param {integer} sourceY 
+         * @param {integer} targetXMin 
+         * @param {integer} targetXMax 
+         * @param {integer} targetYMin 
+         * @param {integer} targetYMax 
+         * @returns boolean
+         */
+        function isWithinBounds(sourceX, sourceY, targetXMin, targetXMax, targetYMin, targetYMax) {
+            return (
+                sourceX >= targetXMin && sourceX <= targetXMax &&
+                sourceY >= targetYMin && sourceY <= targetYMax
+            )
+        }
+    }, [selectedCharacter])
+
+    // useEffect(() => {
+    //     const allCharactersFound = loaded ? characters.every((ch, i) => ch.isFound) : false;
+    //     setIsComplete(prevIsComplete => allCharactersFound);
+    //     console.log(characters);
+    //     console.log(isComplete)
+    // }, [characters, setIsComplete, loaded])
+
 
     /**
      * @param {event} e 
@@ -126,77 +223,9 @@ export default function GameMap(props) {
         }
     };
 
-    /**
-     * 
-     * NOTE: Stop propogation because if not done, clicking a form button will trigger img click event and drop a marker in the
-     * position of the form button clicked.
-     * @param {event} e 
-     */
-    function handleChoiceSubmit(e) {
-        e.preventDefault();
-        const formData = getFormData(e);
-        const submittedCharacter = formData.character;
-        const availableCharacters = getAvailableCharacters(characters);
-        var matchedCharacter;
-        for (let i=0; i < availableCharacters.length; i++) {
-            const character = availableCharacters[i];
-            if (character.name === submittedCharacter) {
-                matchedCharacter = character;
-            };
-        }
-        console.log(matchedCharacter);
-        setMarked(prevMarked => false);
-        setShowValidationForm(true);
-        /**
-         * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
-         * @param {array of Characters} characters 
-         * @returns filtered array of characters
-         */
-        function getAvailableCharacters(characters) {
-            const unfoundCharacters = getUnfoundCharacters(characters)
-            const availableCharacters = getInboundsCharacters(markerX, markerY, unfoundCharacters);
-            return availableCharacters;
-        }
-        /**
-         * Retrieves all the characters in state that have not been found
-         * @param {array of Characters} characters 
-         * @returns filtered array of Characters
-         */
-        function getUnfoundCharacters(characters) {
-            const unfoundCharacters = characters.filter(character => !character.isFound)
-            return unfoundCharacters;
-        }
-        /**
-         * Retrieves all the characters in state that have boundaries encompassing the marked coordinate by the user.
-         * @param {array of Characters} characters 
-         * @returns filtered array of characters
-         */
-        function getInboundsCharacters(sourceX, sourceY, characters) {
-            const inboundsCharacters = characters.filter(character => {
-                const { x_min, x_max, y_min, y_max } = character;
-                console.log("SourceX: " + sourceX);
-                console.log("SourceY: " + sourceY);
-                return isWithinBounds(sourceX, sourceY, x_min, x_max, y_min, y_max);
-            });
-            return inboundsCharacters;
-        }
-        /**
-         * Returns a boolean that denotes whether or not a given point provided (coordinates of [sourceX, sourceY]) fall within the
-         * target boundaries of targetXMin, targetXMax, targetYMin, and targetYMax. 
-         * @param {integer} sourceX 
-         * @param {integer} sourceY 
-         * @param {integer} targetXMin 
-         * @param {integer} targetXMax 
-         * @param {integer} targetYMin 
-         * @param {integer} targetYMax 
-         * @returns boolean
-         */
-        function isWithinBounds(sourceX, sourceY, targetXMin, targetXMax, targetYMin, targetYMax) {
-            return (
-                sourceX >= targetXMin && sourceX <= targetXMax &&
-                sourceY >= targetYMin && sourceY <= targetYMax
-            )
-        }
+    function handleCharacterSelect(character) {
+        setIsValidating(prevIsValidating => true);
+        setSelectedCharacter(prevSelectedCharacter => character);
     }
 
     return (
@@ -215,7 +244,15 @@ export default function GameMap(props) {
             {marked &&
                 <>
                     <Marker x={markerImgX} y={markerImgY} /> 
-                    <Choices x={choicesX} y={choicesY} characters={characters} handleChoiceSubmit={handleChoiceSubmit}/>                
+                    <Choices 
+                        x={choicesX} 
+                        y={choicesY} 
+                        characters={characters} 
+                        handleCharacterSelect={handleCharacterSelect} 
+                        isValidating={isValidating} 
+                        validated={validated}
+                        isValid={isValid} 
+                    />                
                 </>
             }
         </Container>
