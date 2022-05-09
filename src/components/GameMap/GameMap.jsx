@@ -82,6 +82,7 @@ export default function GameMap(props) {
         setIsComplete(prevIsComplete => allCharactersFound);
         setTimeout(() => {
             setMarked(prevMarked => false);
+            setValidated(prevValidated => false);
         }, 500)
         /**
          * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
