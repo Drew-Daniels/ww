@@ -49,7 +49,7 @@ export default function GameForm(props) {
                             <span className='duration'>
                                 {duration} 
                             </span>
-                        seconds!
+                        ms!
                     </h2>
                     <p className='text-center'>If you would like to log your win on the leaderboards, enter your username below:</p>
                     <FloatingLabel

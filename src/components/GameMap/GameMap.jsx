@@ -49,11 +49,6 @@ export default function GameMap(props) {
     const [absX, setAbsX] = useState(0);
     const [absY, setAbsY] = useState(0);
 
-    // Monitor for changes in selectedCharacter here
-    /**
-     * 1. Get the list of nearby and unfound characters
-     * 2. 
-     */
     useEffect(() => {
         if (selectedCharacter == null) { return }
         const availableCharacters = getAvailableCharacters(characters);
@@ -64,7 +59,6 @@ export default function GameMap(props) {
                 matchedCharacter = character;
             };
         }
-        console.log(selectedCharacter);
         setIsValidating(prevIsValidating => false);
         setValidated(prevValidated => true);
         setIsValid(prevIsValid => matchedCharacter ? true : false);
@@ -79,10 +73,16 @@ export default function GameMap(props) {
                     return ch;
                 }
             }))
+        } else {
+            setSelectedCharacter(null);
         }
+        const allCharactersFound = characters.every(function(ch) {
+            return ch.isFound === true;
+        })
+        setIsComplete(prevIsComplete => allCharactersFound);
         setTimeout(() => {
             setMarked(prevMarked => false);
-        }, 5000)
+        }, 500)
         /**
          * Retrieves all the characters in state that have not been found AND have boundaries encompassing the marked coordinate by the user.
          * @param {array of Characters} characters 
@@ -132,14 +132,6 @@ export default function GameMap(props) {
             )
         }
     }, [selectedCharacter])
-
-    // useEffect(() => {
-    //     const allCharactersFound = loaded ? characters.every((ch, i) => ch.isFound) : false;
-    //     setIsComplete(prevIsComplete => allCharactersFound);
-    //     console.log(characters);
-    //     console.log(isComplete)
-    // }, [characters, setIsComplete, loaded])
-
 
     /**
      * @param {event} e 

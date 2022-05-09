@@ -115,13 +115,10 @@ export default function Game(props) {
     }
 
     useEffect(() => {
-        if (isComplete) {
-            console.log(isComplete)
+        if (isComplete && loaded) {
             setShowLeaderboardsForm(true);
         }
-    }, [isComplete])
-
-
+    }, [isComplete, loaded])
 
     function onHideLeaderboardsForm() {
         setShowLeaderboardsForm(false);
