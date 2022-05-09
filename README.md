@@ -1,2 +1,2 @@
-# Created an E-Commerce/Shopping Cart app for The Odin Project
+# Created a Where's Waldo-style photo tagging game for The Odin Project
 ![Alt text](./ww.gif?raw=true "Where's Waldo application gif")
