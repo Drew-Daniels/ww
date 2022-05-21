@@ -8,10 +8,10 @@ export default function CharacterLegend(props) {
     const { loaded, characters } = props;
 
     return (
-        <Container fluid className='d-flex flex-grow-1 justify-content-center align-items-center character-legend'>
+        <Container fluid className='d-flex justify-content-center align-items-center character-legend'>
             <ListGroup className='d-flex flex-grow-1 flex-row'>
                 {characters.map((character, i) => {
-                    const { name, difficulty, imgURL, isFound } = character;
+                    const { name, imgURL, isFound } = character;
                     return (
                         <ListGroup.Item key={i} className='d-flex flex-grow-1 flex-row character-card-container'>
                             <Card className='d-flex flex-grow-1 character-card'>
@@ -25,20 +25,21 @@ export default function CharacterLegend(props) {
                                 {loaded &&
                                     <Card.Title className='d-flex justify-content-center align-items-center'>
                                         <span className='character-name'>{name}</span>
-                                            {isFound && 
-                                                <IconContext.Provider value={{ color: 'green' }}>
-                                                    <FoundIcon />
-                                                </IconContext.Provider>
-                                            }
-                                            {!isFound && 
-                                                <IconContext.Provider value={{ color: '#fd5252'}}>
-                                                    <NotFoundIcon />
-                                                </IconContext.Provider>
-                                            }
+
                                     </Card.Title>
                                 }
                                 <Card.Body>
-                                    <div className='d-flex justify-content-center'>
+                                    <div className='d-flex flex-column justify-content-center align-items-center'>
+                                        {isFound && 
+                                            <IconContext.Provider value={{ color: 'green' }}>
+                                                <FoundIcon />
+                                            </IconContext.Provider>
+                                        }
+                                        {!isFound && 
+                                            <IconContext.Provider value={{ color: '#fd5252'}}>
+                                                <NotFoundIcon />
+                                            </IconContext.Provider>
+                                        }
                                         {!loaded &&
                                             <Spinner animation="grow" variant="danger" />
                                         }

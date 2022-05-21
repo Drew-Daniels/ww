@@ -1,17 +1,17 @@
 .timer {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1.5em;
+    font-size: 1rem;
     color: #fd5252;
-    padding: .5em;
+    padding: .5rem;
     background-color: rgb(33, 37, 41);
     border: 1px solid #fd5252;
-    border-radius: .25em;
+    border-radius: .25rem;
     display: flex;
     justify-content: center;
 }
 .timer-icon {
     transform: rotate(-45deg);
-    margin-right: 1em;
+    margin-right: 1rem;
 }
 .spin {
     animation: spin 60s linear infinite;
