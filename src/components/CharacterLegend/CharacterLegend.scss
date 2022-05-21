@@ -9,7 +9,7 @@
 }
 .character-name {
     background-color: rgb(33, 37, 41);
-    font-size: 1rem;
+    font-size: 2rem;
 }
 .character-image {
     height: 3rem;
@@ -20,5 +20,8 @@
 @media screen and (max-width: 600px) {
     .character-image {
         height: 1rem;
+    }
+    .character-name {
+        font-size: 1rem;
     }
 }

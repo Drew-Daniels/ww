@@ -29,7 +29,7 @@ export default function CharacterLegend(props) {
                                     </Card.Title>
                                 }
                                 <Card.Body>
-                                    <div className='d-flex flex-column justify-content-center align-items-center'>
+                                    <div className='d-flex flex-column justify-content-between align-items-center'>
                                         {isFound && 
                                             <IconContext.Provider value={{ color: 'green' }}>
                                                 <FoundIcon />

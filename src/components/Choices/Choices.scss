@@ -38,3 +38,12 @@
     right: 3rem;
     bottom: .7rem;
 }
+
+@media screen and (max-width: 600px) {
+    .choice-header {
+        font-size: 1rem;
+    }
+    .choices {
+        font-size: .5rem;
+    }
+}
